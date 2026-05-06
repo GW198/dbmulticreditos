@@ -264,8 +264,9 @@
             <tr><td>JOSEFINA MERCADO MACHADO</td><td>$0</td><td><span class="badge badge-gray">Buró de crédito</span></td><td>Atraso con DIMEX</td></tr>
             <tr><td>ELSA PATRICIA REYES URESTI</td><td>$0</td><td><span class="badge badge-gray">Buró de crédito</span></td><td>Atraso con DIMEX</td></tr>
             <tr><td>MARIA TERESA DE LA NATIVIDAD LOPEZ VADILLO</td><td>$20,000</td><td><span class="badge badge-gray">Buró de crédito</span></td><td>Atraso con DIMEX</td></tr>
-            <tr><td>ZACARIAS FUENTES ROJAS</td><td>$10,000</td><td><span class="badge badge-gray">Buró de crédito</span></td><td>Atraso con DIMEX</td></tr>
-            <tr><td>ZACARIAS FUENTES ROJAS</td><td>$80,000</td><td><span class="badge badge-gray">En seguimiento</span></td><td>En espera de firma de contrato</td></tr>
+            <tr><td>NAYMA DIAZ VILLALOBOS</td><td>$10,000</td><td><span class="badge badge-gray">Buró de crédito</span></td><td>Atraso con DIMEX</td></tr>
+            <tr><td>ZACARIAS FUENTES ROJAS</td><td>$80,000</td><td><span class="badge badge-gray">Cancelada</span></td><td>Cliente cancela </td></tr>
+            <tr><td>ADOLFO LUNA INZUNZA</td><td>$10,000</td><td><span class="badge badge-gray">Buró de crédito</span></td><td>Atraso con DIMEX</td></tr>
     
             
           </tbody>
@@ -273,7 +274,7 @@
       </div>
     </div>
     <div class="table-card">
-      <h3><i class="fas fa-building-columns"></i> Multiva Kapi</h3>
+      <h3><i class="fas fa-building-columns"></i> Multiva</h3>
       <div style="overflow-x: auto;">
         <table>
           <thead>
@@ -281,7 +282,9 @@
           </thead>
           <tbody>
             <tr><td>HERNANDEZ VARGAS MIGUEL</td><td>$100,000.00</td><td><span class="badge badge-blue">En proceso</span></td></tr>
-            <tr><td>JOSE FILOMENO LOPEZ HERNANDEZ </td><td>$115,00</td><td><span class="badge badge-blue">En proceso</span></td></tr>
+            <tr><td>JOSE FILOMENO LOPEZ HERNANDEZ</td><td>$115,00</td><td><span class="badge badge-blue">En proceso</span></td></tr>
+            <tr><td>LEONOR RODRGUEZ GARCIA</td><td>$82,700</td><td><span class="badge badge-blue">En proceso</span></td></tr>
+            <tr><td>SAIRA LOURDES VARGAS LEAL</td><td>$62,000</td><td><span class="badge badge-blue">En proceso</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -358,11 +361,11 @@
   }
 
   // Estatus DIMEX
-  const statusData = [3, 2, 8, 1];
+  const statusData = [0, 6, 1, 0];
   const statusTotal = statusData.reduce((a,b)=>a+b,0);
   const statusCtx = document.getElementById('abrilStatusChart')?.getContext('2d');
   if (statusCtx) {
-    new Chart(statusCtx, { type: 'doughnut', data: { labels: ['Aprobado (3)', 'Buró de Crédito (2)', 'Sin Capacidad (8)', 'En seguimiento (1)'], datasets: [{ data: statusData, backgroundColor: ['#22c55e', '#ef4444', '#3d7fff', '#f59e0b'], borderWidth: 0, total: statusTotal }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: defaults.tick, boxWidth: 10, font: { size: 10 } } }, datalabels: { ...datalabelsConfig, formatter: (value) => { let pct = ((value / statusTotal) * 100).toFixed(1); return `${pct}%`; } } }, cutout: '60%' } });
+    new Chart(statusCtx, { type: 'doughnut', data: { labels: ['Aprobado (0)', 'Buró de Crédito (6)', 'Cancela (1)', 'En seguimiento (0)'], datasets: [{ data: statusData, backgroundColor: ['#22c55e', '#ef4444', '#3d7fff', '#f59e0b'], borderWidth: 0, total: statusTotal }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: defaults.tick, boxWidth: 10, font: { size: 10 } } }, datalabels: { ...datalabelsConfig, formatter: (value) => { let pct = ((value / statusTotal) * 100).toFixed(1); return `${pct}%`; } } }, cutout: '60%' } });
     document.getElementById('dimexStatusTotalBadge').innerText = `Total: ${statusTotal}`;
   }
 
