@@ -367,7 +367,7 @@
   const statusTotal = statusData.reduce((a,b)=>a+b,0);
   const statusCtx = document.getElementById('abrilStatusChart')?.getContext('2d');
   if (statusCtx) {
-    new Chart(statusCtx, { type: 'doughnut', data: { labels: ['Aprobado (0)', 'Buró de Crédito (6)', 'Cancela (1)', 'En seguimiento (0)'], datasets: [{ data: statusData, backgroundColor: ['#22c55e', '#ef4444', '#3d7fff', '#f59e0b'], borderWidth: 0, total: statusTotal }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: defaults.tick, boxWidth: 10, font: { size: 10 } } }, datalabels: { ...datalabelsConfig, formatter: (value) => { let pct = ((value / statusTotal) * 100).toFixed(1); return `${pct}%`; } } }, cutout: '60%' } });
+    new Chart(statusCtx, { type: 'doughnut', data: { labels: ['Aprobado (0)', 'Buró de Crédito (6)', 'Cancela (1)', 'En seguimiento (0)'], datasets: [{ data: statusData, backgroundColor: ['#22c55e',  '#3d7fff', '#ef4444', '#f59e0b'], borderWidth: 0, total: statusTotal }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: defaults.tick, boxWidth: 10, font: { size: 10 } } }, datalabels: { ...datalabelsConfig, formatter: (value) => { let pct = ((value / statusTotal) * 100).toFixed(1); return `${pct}%`; } } }, cutout: '60%' } });
     document.getElementById('dimexStatusTotalBadge').innerText = `Total: ${statusTotal}`;
   }
 
