@@ -187,7 +187,7 @@
     <div class="kpi-card blue"><div class="kpi-icon-wrap"><i class="fas fa-phone-volume"></i></div><div class="kpi-value">0</div><div class="kpi-label">Gestiones Totales</div><div class="kpi-sub">Llamadas</div></div>
     <div class="kpi-card green"><div class="kpi-icon-wrap"><i class="fas fa-circle-check"></i></div><div class="kpi-value">0</div><div class="kpi-label">Aprobado DIMEX</div><div class="kpi-sub">$0 desembolsado</div></div>
     <div class="kpi-card gold"><div class="kpi-icon-wrap"><i class="fas fa-building-columns"></i></div><div class="kpi-value">0</div><div class="kpi-label">Comprado MULTIVA</div><div class="kpi-sub">$0 comprado</div></div>
-    <div class="kpi-card blue"><div class="kpi-icon-wrap"><i class="fas fa-tags"></i></div><div class="kpi-value">20</div><div class="kpi-label">Contactos Leads</div><div class="kpi-sub">85% Ya no contesto</div></div>
+    <div class="kpi-card blue"><div class="kpi-icon-wrap"><i class="fas fa-tags"></i></div><div class="kpi-value">21</div><div class="kpi-label">Contactos Leads</div><div class="kpi-sub">85% Ya no contesto</div></div>
   </div>
 
   <div class="section-label">Avance vs. Metas Mensuales</div>
@@ -222,13 +222,13 @@
 
   <div class="section-label">Tipificación y Gestión de Contactos</div>
   <div class="charts-row">
-    <div class="chart-card"><div class="chart-title"><i class="fas fa-tags"></i> Tipificaciones · Campaña Multiva (Abril)</div><div class="chart-container"><canvas id="multivaTipiChart"></canvas></div><div class="total-badge" id="tipiTotalBadge">Total: 0</div></div>
-    <div class="chart-card"><div class="chart-title"><i class="fas fa-chart-donut"></i> Gestión Contactos · PYMIO</div><div class="chart-container" style="height:200px;"><canvas id="multivaGestionChart"></canvas></div><div class="total-badge" id="gestionTotalBadge">Total: 0</div></div>
+    <div class="chart-card"><div class="chart-title"><i class="fas fa-tags"></i> Tipificaciones </div><div class="chart-container"><canvas id="multivaTipiChart"></canvas></div><div class="total-badge" id="tipiTotalBadge">Total: 0</div></div>
+    <div class="chart-card"><div class="chart-title"><i class="fas fa-chart-donut"></i> Gestión Contactos </div><div class="chart-container" style="height:200px;"><canvas id="multivaGestionChart"></canvas></div><div class="total-badge" id="gestionTotalBadge">Total: 0</div></div>
   </div>
 
   <div class="charts-row">
-    <div class="chart-card"><div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus DIMEX · Abril</div><div class="chart-container" style="height:210px;"><canvas id="abrilStatusChart"></canvas></div><div class="total-badge" id="dimexStatusTotalBadge">Total: 0</div></div>
-    <div class="chart-card"><div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus Multiva Kapi · Pipeline</div><div class="chart-container" style="height:210px;"><canvas id="multivaEstatusPipelineChart"></canvas></div><div class="total-badge" id="multivaPipeTotalBadge">Total: 0</div></div>
+    <div class="chart-card"><div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus DIMEX </div><div class="chart-container" style="height:210px;"><canvas id="abrilStatusChart"></canvas></div><div class="total-badge" id="dimexStatusTotalBadge">Total: 0</div></div>
+    <div class="chart-card"><div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus Multiva </div><div class="chart-container" style="height:210px;"><canvas id="multivaEstatusPipelineChart"></canvas></div><div class="total-badge" id="multivaPipeTotalBadge">Total: 0</div></div>
   </div>
 
   <div class="section-label">Contactos WhatsApp · Abril 2026</div>
@@ -353,11 +353,11 @@
   }
 
   // Gestión PYMIO
-  const gestionData = [0, 16, 1, 2];
+  const gestionData = [0, 16, 3, 1, 1];
   const gestionTotal = gestionData.reduce((a,b)=>a+b,0);
   const gestionCtx = document.getElementById('multivaGestionChart')?.getContext('2d');
   if (gestionCtx) {
-    new Chart(gestionCtx, { type: 'doughnut', data: { labels: ['Aprobado (0)', 'Ya no contesta (16)', 'Cancelada (1)', 'Espera de oferta (2)'], datasets: [{ data: gestionData, backgroundColor: ['#22c55e', '#f97316','#ef4444', '#64748b'], borderWidth: 0, total: gestionTotal }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: defaults.tick, boxWidth: 10, font: { size: 10 } } }, datalabels: { ...datalabelsConfig, formatter: (value) => { let pct = ((value / gestionTotal) * 100).toFixed(1); return `${pct}%`; } } }, cutout: '60%' } });
+    new Chart(gestionCtx, { type: 'doughnut', data: { labels: ['Aprobado (0)', 'Ya no contesta (16)', 'Atraso DIMEX (3)', 'En proceso (1)', 'Sin convenio'], datasets: [{ data: gestionData, backgroundColor: ['#22c55e', '#f97316','#ef4444', '#64748b', '#0000ff'], borderWidth: 0, total: gestionTotal }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: defaults.tick, boxWidth: 10, font: { size: 10 } } }, datalabels: { ...datalabelsConfig, formatter: (value) => { let pct = ((value / gestionTotal) * 100).toFixed(1); return `${pct}%`; } } }, cutout: '60%' } });
     document.getElementById('gestionTotalBadge').innerText = `Total: ${gestionTotal}`;
   }
 
