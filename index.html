@@ -185,7 +185,7 @@
   <div class="section-label">Indicadores Clave</div>
   <div class="kpi-grid">
     <div class="kpi-card blue"><div class="kpi-icon-wrap"><i class="fas fa-phone-volume"></i></div><div class="kpi-value">3,454</div><div class="kpi-label">Gestiones Totales</div><div class="kpi-sub">Llamadas</div></div>
-    <div class="kpi-card green"><div class="kpi-icon-wrap"><i class="fas fa-circle-check"></i></div><div class="kpi-value">0</div><div class="kpi-label">Aprobado DIMEX</div><div class="kpi-sub">$0 desembolsado</div></div>
+    <div class="kpi-card green"><div class="kpi-icon-wrap"><i class="fas fa-circle-check"></i></div><div class="kpi-value">1</div><div class="kpi-label">Aprobado DIMEX</div><div class="kpi-sub">$22,764.25 desembolsado</div></div>
     <div class="kpi-card gold"><div class="kpi-icon-wrap"><i class="fas fa-building-columns"></i></div><div class="kpi-value">0</div><div class="kpi-label">Comprado MULTIVA</div><div class="kpi-sub">$0 comprado</div></div>
     <div class="kpi-card blue"><div class="kpi-icon-wrap"><i class="fas fa-tags"></i></div><div class="kpi-value">21</div><div class="kpi-label">Contactos Leads</div><div class="kpi-sub">85% Ya no contesto</div></div>
   </div>
@@ -194,12 +194,12 @@
   <div class="progress-row">
     <div class="progress-card">
       <div class="progress-title"><i class="fas fa-chart-simple"></i> DIMEX · Seguimiento de Meta</div>
-      <div class="progress-bar-label"><span>✅ Comprado: <strong id="dimexCompradoVal">$0</strong></span><span>Meta: $500,000</span></div>
+      <div class="progress-bar-label"><span>✅ Comprado: <strong id="dimexCompradoVal">$22,764.25</strong></span><span>Meta: $500,000</span></div>
       <div class="bar-track" id="dimexCompradoTrack">
         <div class="bar-fill" id="dimexCompradoFill" style="background: var(--green); width: 0%;"></div>
         <span class="bar-percent" id="dimexCompradoPercent">0%</span>
       </div>
-      <div class="progress-bar-label"><span>🔄 Transferido: <strong id="dimexTransferVal">$0</strong></span><span>Meta: $1,250,000</span></div>
+      <div class="progress-bar-label"><span>🔄 Transferido: <strong id="dimexTransferVal">$203,129.98</strong></span><span>Meta: $1,250,000</span></div>
       <div class="bar-track" id="dimexTransferTrack">
         <div class="bar-fill" id="dimexTransferFill" style="background: var(--blue); width: 0%;"></div>
         <span class="bar-percent" id="dimexTransferPercent">0%</span>
@@ -421,10 +421,10 @@
 
   // Datos actuales (Transferido DIMEX supera la meta: 275,947.54 vs 250,000 => 110.38%)
   const progressData = {
-    dimexComp: 0, dimexMetaComp: 500000,
-    dimexTrans: 0, dimexMetaTrans: 1250000,
+    dimexComp: 22764.25, dimexMetaComp: 500000,
+    dimexTrans: 203129.98, dimexMetaTrans: 1250000,
     multComp: 0, multMetaComp: 1550000,
-    multTrans: 251300, multMetaTrans: 31000000
+    multTrans: 632573.16, multMetaTrans: 31000000
   };
 
   updateProgressBar('dimexCompradoFill', 'dimexCompradoPercent', progressData.dimexComp, progressData.dimexMetaComp);
