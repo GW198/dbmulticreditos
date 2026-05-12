@@ -292,7 +292,11 @@
             <tr><td>JOSE FILOMENO LOPEZ HERNANDEZ</td><td>$115,00</td><td><span class="badge badge-blue">En proceso</span></td></tr>
             <tr><td>LEONOR RODRGUEZ GARCIA</td><td>$82,700</td><td><span class="badge badge-blue">En proceso</span></td></tr>
             <tr><td>SAIRA LOURDES VARGAS LEAL</td><td>$62,000</td><td><span class="badge badge-blue">En proceso</span></td></tr>
-            <tr><td>JOSEFINA LEON</td><td>$106,600</td><td><span class="badge badge-blue">En proceso</span></td></tr>
+            <tr><td>GUILLERMINA CENTENO GOLLAS</td><td>$100,600</td><td><span class="badge badge-blue">En proceso</span></td></tr>
+            <tr><td>LUNA SANCHEZ MARTIN FERNANDO</td><td>$100,600</td><td><span class="badge badge-blue">En proceso</span></td></tr>
+            <tr><td>CLEMENTE MIGUEL MARTINEZ NEPOMUCENO</td><td>$36,436.58</td><td><span class="badge badge-blue">En proceso</span></td></tr>
+            <tr><td>TORRES LOPEZ BERNARDO</td><td>$77,500.58</td><td><span class="badge badge-blue">En proceso</span></td></tr>
+            <tr><td>Carlos Villarreal Torres</td><td>$41,000</td><td><span class="badge badge-blue">En proceso</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -378,11 +382,11 @@
   }
 
   // Estatus Multiva Pipeline
-  const pipeData = [0, 5, 0, 0];
+  const pipeData = [0, 9, 0, 0];
   const pipeTotal = pipeData.reduce((a,b)=>a+b,0);
   const multivaPipeCtx = document.getElementById('multivaEstatusPipelineChart')?.getContext('2d');
   if (multivaPipeCtx) {
-    new Chart(multivaPipeCtx, { type: 'doughnut', data: { labels: ['Comprado (0)', 'En proceso (5)', 'Sin capacidad (0)', 'Cancelado (0)'], datasets: [{ data: pipeData, backgroundColor: ['#22c55e', '#3d7fff', '#f59e0b', '#ef4444'], borderWidth: 0, total: pipeTotal }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: defaults.tick, boxWidth: 10, font: { size: 10 } } }, datalabels: { ...datalabelsConfig, formatter: (value) => { let pct = ((value / pipeTotal) * 100).toFixed(1); return `${pct}%`; } } }, cutout: '60%' } });
+    new Chart(multivaPipeCtx, { type: 'doughnut', data: { labels: ['Comprado (0)', 'En proceso (9)', 'Sin capacidad (0)', 'Cancelado (0)'], datasets: [{ data: pipeData, backgroundColor: ['#22c55e', '#3d7fff', '#f59e0b', '#ef4444'], borderWidth: 0, total: pipeTotal }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: defaults.tick, boxWidth: 10, font: { size: 10 } } }, datalabels: { ...datalabelsConfig, formatter: (value) => { let pct = ((value / pipeTotal) * 100).toFixed(1); return `${pct}%`; } } }, cutout: '60%' } });
     document.getElementById('multivaPipeTotalBadge').innerText = `Total: ${pipeTotal}`;
   }
 
