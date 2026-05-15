@@ -396,7 +396,7 @@
   new Chart(ctxLlamadas, {
     type: 'bar',
     data: { labels: agentes.map(a => a.nombre.split('.')[0]), datasets: [{ label: 'Llamadas realizadas', data: agentes.map(a => a.llamadas), backgroundColor: 'rgba(61,127,255,0.7)', borderRadius: 6 }, { label: 'Contactos efectivos', data: agentes.map(a => a.contactos), backgroundColor: 'rgba(34,197,94,0.8)', borderRadius: 6 }] },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#8da0bb' } }, tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw}` } } }, scales: { y: { ticks: { color: '#8da0bb' }, grid: { color: 'rgba(255,255,255)' } }, x: { ticks: { color: '#cbd5e6', font: { size: 9 } }, grid: { display: false } } } }
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#ffffff' } }, tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw}` } } }, scales: { y: { ticks: { color: '#8da0bb' }, grid: { color: 'rgba(255,255,255,0.5)' } }, x: { ticks: { color: '#cbd5e6', font: { size: 9 } }, grid: { display: false } } } }
   });
   document.getElementById('llamadasTotalBadge').innerText = `Total Llamadas: ${totalLlamadas}`;
 
