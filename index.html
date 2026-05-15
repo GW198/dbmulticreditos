@@ -343,7 +343,7 @@
   const statusTotal = statusData.reduce((a,b)=>a+b,0);
   const statusCtx = document.getElementById('abrilStatusChart')?.getContext('2d');
   if (statusCtx) {
-    new Chart(statusCtx, { type: 'doughnut', data: { labels: statusLabels, datasets: [{ data: statusData, backgroundColor: ['#22c55e', '#3d7fff', '#ef4444', '#f59e0b', '#f97316', '#AA61AD'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: chartDefaults.tick, boxWidth: 10, font: { size: 9 } } }, datalabels: { formatter: (value) => { let pct = ((value / statusTotal) * 100).toFixed(1); return `${pct}%`; }, ...datalabelsConfig } }, cutout: '60%' } });
+    new Chart(statusCtx, { type: 'doughnut', data: { labels: statusLabels, datasets: [{ data: statusData, backgroundColor: ['#22c55e', '#3d7fff', '#ef4444', '#f59e0b', '#f97316', '#b4f8c8'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: chartDefaults.tick, boxWidth: 10, font: { size: 9 } } }, datalabels: { formatter: (value) => { let pct = ((value / statusTotal) * 100).toFixed(1); return `${pct}%`; }, ...datalabelsConfig } }, cutout: '60%' } });
     document.getElementById('dimexStatusTotalBadge').innerText = `Total: ${statusTotal}`;
   }
 
