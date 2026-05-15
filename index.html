@@ -349,7 +349,7 @@
 
   // Datos estatus Multiva
   const pipeData = [1, 4, 9, 1];
-  const pipeLabels = ['Comprado', 'En proceso', 'Sin capacidad', 'Cancelado'];
+  const pipeLabels = ['Comprado (1)', 'En proceso (4)', 'Sin capacidad (9)', 'Cancelado (1)'];
   const pipeTotal = pipeData.reduce((a,b)=>a+b,0);
   const multivaPipeCtx = document.getElementById('multivaEstatusPipelineChart')?.getContext('2d');
   if (multivaPipeCtx) {
