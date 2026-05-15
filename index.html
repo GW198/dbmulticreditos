@@ -338,7 +338,7 @@
   }
 
   // Datos estatus DIMEX
-  const statusData = [2, 14, 2, 2, 1];
+  const statusData = [2, 14, 2, 2, 1,1];
   const statusLabels = ['Aprobado (2)', 'Buró de Crédito (14)', 'Cancelado (2)', 'Sin capacidad (2)', 'Declina oferta (1)', 'En seguimiento (1)'];
   const statusTotal = statusData.reduce((a,b)=>a+b,0);
   const statusCtx = document.getElementById('abrilStatusChart')?.getContext('2d');
