@@ -329,7 +329,7 @@
 
   // Datos de gestión
   const gestionData = [0, 32, 5, 1, 8, 1];
-  const gestionLabels = ['Aprobado', 'Ya no contesta', 'Atraso DIMEX', 'En proceso', 'Sin convenio', 'Desconfianza'];
+  const gestionLabels = ['Aprobado (0)', 'Ya no contesta (32)', 'Atraso DIMEX (5)', 'En proceso (1)', 'Sin convenio (8)', 'Desconfianza (1)'];
   const gestionTotal = gestionData.reduce((a,b)=>a+b,0);
   const gestionCtx = document.getElementById('multivaGestionChart')?.getContext('2d');
   if (gestionCtx) {
@@ -339,11 +339,11 @@
 
   // Datos estatus DIMEX
   const statusData = [2, 14, 2, 2, 1];
-  const statusLabels = ['Aprobado', 'Buró de Crédito', 'Cancelado', 'Sin capacidad', 'Declina oferta'];
+  const statusLabels = ['Aprobado (2)', 'Buró de Crédito (14)', 'Cancelado (2)', 'Sin capacidad (2)', 'Declina oferta (1)', 'En seguimiento (1)'];
   const statusTotal = statusData.reduce((a,b)=>a+b,0);
   const statusCtx = document.getElementById('abrilStatusChart')?.getContext('2d');
   if (statusCtx) {
-    new Chart(statusCtx, { type: 'doughnut', data: { labels: statusLabels, datasets: [{ data: statusData, backgroundColor: ['#22c55e', '#3d7fff', '#ef4444', '#f59e0b', '#f97316'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: chartDefaults.tick, boxWidth: 10, font: { size: 9 } } }, datalabels: { formatter: (value) => { let pct = ((value / statusTotal) * 100).toFixed(1); return `${pct}%`; }, ...datalabelsConfig } }, cutout: '60%' } });
+    new Chart(statusCtx, { type: 'doughnut', data: { labels: statusLabels, datasets: [{ data: statusData, backgroundColor: ['#22c55e', '#3d7fff', '#ef4444', '#f59e0b', '#f97316', '#AA61AD'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: chartDefaults.tick, boxWidth: 10, font: { size: 9 } } }, datalabels: { formatter: (value) => { let pct = ((value / statusTotal) * 100).toFixed(1); return `${pct}%`; }, ...datalabelsConfig } }, cutout: '60%' } });
     document.getElementById('dimexStatusTotalBadge').innerText = `Total: ${statusTotal}`;
   }
 
