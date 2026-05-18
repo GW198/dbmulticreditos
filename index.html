@@ -414,7 +414,7 @@
   new Chart(ctxTransfer, {
     type: 'bar',
     data: { labels: agentes.map(a => a.nombre.split('.')[0]), datasets: [{ label: 'Transferido ($)', data: agentes.map(a => a.transferido), backgroundColor: 'rgba(45,212,191,0.7)', borderRadius: 8 }] },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { tooltip: { callbacks: { label: (ctx) => `$${ctx.raw.toLocaleString('en-US')}` } }, datalabels: { formatter: (val) => val > 0 ? `$${val.toLocaleString('en-US', {notation:'compact'})}` : '', font: { size: 9 } } }, scales: { y: { ticks: { callback: (val) => `$${val.toLocaleString()}` }, grid: { color: 'rgba(255,255,255,0.06)' } }, x: { ticks: { color: '#cbd5e6' } } } }
+    options: { responsive: true, maintainAspectRatio: false, plugins: { tooltip: { callbacks: { label: (ctx) => `$${ctx.raw.toLocaleString('en-US')}` } }, datalabels: { formatter: (val) => val > 0 ? `$${val.toLocaleString('es-MX', {notation:'compact'})}` : '', font: { size: 9 } } }, scales: { y: { ticks: { callback: (val) => `$${val.toLocaleString()}` }, grid: { color: 'rgba(255,255,255,0.06)' } }, x: { ticks: { color: '#cbd5e6' } } } }
   });
 
   // Gráfica Distribución Ventas - USANDO VALORES MANUALES
