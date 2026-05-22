@@ -210,7 +210,7 @@
 
   <div class="kpi-grid">
     <div class="kpi-card blue"><div class="kpi-icon-wrap"><i class="fas fa-phone-volume"></i></div><div class="kpi-value">20,441</div><div class="kpi-label">Llamadas realizadas</div><div class="kpi-sub">Total agentes</div></div>
-    <div class="kpi-card green"><div class="kpi-icon-wrap"><i class="fas fa-handshake"></i></div><div class="kpi-value">$137,072.97</div><div class="kpi-label">Vendido (DIMEX)</div><div class="kpi-sub"></div></div>
+    <div class="kpi-card green"><div class="kpi-icon-wrap"><i class="fas fa-handshake"></i></div><div class="kpi-value">$184,272.97</div><div class="kpi-label">Vendido (DIMEX)</div><div class="kpi-sub"></div></div>
     <div class="kpi-card gold"><div class="kpi-icon-wrap"><i class="fas fa-address-card"></i></div><div class="kpi-value">$215,000</div><div class="kpi-label">Vendido (Multiva)</div><div class="kpi-sub"></div></div>
     <div class="kpi-card purple"><div class="kpi-icon-wrap"><i class="fas fa-chart-line"></i></div><div class="kpi-value" id="kpiRatio">0%</div><div class="kpi-label">Contactabilidad</div><div class="kpi-sub"></div></div>
   </div>
@@ -218,16 +218,16 @@
   <div class="progress-row">
     <div class="progress-card">
       <div class="progress-title"><i class="fas fa-chart-simple"></i> DIMEX · Meta Compra / Transferido</div>
-      <div class="progress-bar-label"><span>✅ Comprado: <strong>$137,072.97</strong></span><span>Meta: $500,000</span></div>
+      <div class="progress-bar-label"><span>✅ Comprado: <strong>$184,272.97</strong></span><span>Meta: $500,000</span></div>
       <div class="bar-track"><div class="bar-fill" id="dimexCompradoFill" style="background: var(--green); width: 0%;"></div><span class="bar-percent" id="dimexCompradoPercent">0%</span></div>
-      <div class="progress-bar-label"><span>🔄 Transferido: <strong>$476,130</strong></span><span>Meta: $1,000,000</span></div>
+      <div class="progress-bar-label"><span>🔄 Transferido: <strong>$737,754.33</strong></span><span>Meta: $1,000,000</span></div>
       <div class="bar-track"><div class="bar-fill" id="dimexTransferFill" style="background: var(--blue); width: 0%;"></div><span class="bar-percent" id="dimexTransferPercent">0%</span></div>
     </div>
     <div class="progress-card">
       <div class="progress-title"><i class="fas fa-building-columns"></i> MULTIVA KAPI · Meta Compra / Transferido</div>
       <div class="progress-bar-label"><span>✅ Comprado: <strong>$215,000</strong></span><span>Meta: $1,550,000</span></div>
       <div class="bar-track"><div class="bar-fill" id="multivaCompradoFill" style="background: var(--green); width: 0%;"></div><span class="bar-percent" id="multivaCompradoPercent">0%</span></div>
-      <div class="progress-bar-label"><span>🔄 Transferido: <strong>$873,862.90</strong></span><span>Meta: $3,100,000</span></div>
+      <div class="progress-bar-label"><span>🔄 Transferido: <strong>$951,362.90</strong></span><span>Meta: $3,100,000</span></div>
       <div class="bar-track"><div class="bar-fill" id="multivaTransferFill" style="background: var(--blue); width: 0%;"></div><span class="bar-percent" id="multivaTransferPercent">0%</span></div>
     </div>
   </div>
@@ -459,10 +459,10 @@
       if (percentSpan) percentSpan.innerText = `${rawPercent.toFixed(1)}%`;
     }
   }
-  updateProgress('dimexCompradoFill', 'dimexCompradoPercent', 137072.97, 500000);
-  updateProgress('dimexTransferFill', 'dimexTransferPercent', 476130, 1000000);
+  updateProgress('dimexCompradoFill', 'dimexCompradoPercent', 184272.97, 500000);
+  updateProgress('dimexTransferFill', 'dimexTransferPercent', 737754.33, 1000000);
   updateProgress('multivaCompradoFill', 'multivaCompradoPercent', 215000, 1550000);
-  updateProgress('multivaTransferFill', 'multivaTransferPercent', 873862.90, 3100000);
+  updateProgress('multivaTransferFill', 'multivaTransferPercent', 951362.9, 3100000);
 
 })();
 </script>
