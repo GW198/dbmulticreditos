@@ -348,8 +348,8 @@
   }
 
   // Datos estatus Multiva
-  const pipeData = [2, 4, 9, 1];
-  const pipeLabels = ['Comprado (2)', 'En proceso (4)', 'Sin capacidad (9)', 'Cancelado (1)'];
+  const pipeData = [2, 1, 10, 3];
+  const pipeLabels = ['Comprado (2)', 'En proceso (1)', 'Sin capacidad (10)', 'Cancelado (3)'];
   const pipeTotal = pipeData.reduce((a,b)=>a+b,0);
   const multivaPipeCtx = document.getElementById('multivaEstatusPipelineChart')?.getContext('2d');
   if (multivaPipeCtx) {
@@ -359,9 +359,9 @@
 
   // Datos de agentes
   const agentes = [
-    { nombre: "Paula", llamadas: 1573, contactos: 489, vendido: 153764, transferido: 403627 },
-    { nombre: "Jesus", llamadas: 753, contactos: 263, vendido: 0, transferido: 402680 },
-    { nombre: "Stefan", llamadas: 812, contactos: 442, vendido: 0, transferido: 281000 }
+    { nombre: "Paula", llamadas: 1573, contactos: 489, vendido:  108318.49, transferido:  633544.33},
+    { nombre: "Jesus", llamadas: 753, contactos: 263, vendido:  28754.48, transferido:  500207.17 },
+    { nombre: "Stefan", llamadas: 812, contactos: 442, vendido:  47200.00, transferido:  368200.00 }
   ];
 
   const totalLlamadas = agentes.reduce((s,a)=> s + a.llamadas, 0);
