@@ -11,7 +11,6 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* ESCALA DE GRISES COMPLETA - SIN COLORES */
     :root {
       --bg: #e9e9e9;
       --surface: #f5f5f5;
@@ -85,7 +84,7 @@
     .progress-title { font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 8px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border); color: var(--text-primary); }
     .progress-title i { color: var(--accent-mid); }
     .progress-bar-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 6px; }
-    .bar-track { background: rgba(255,255,255,0.08); border-radius: 32px; height: 10px; overflow: visible; margin-bottom: 14px; position: relative; }
+    .bar-track { background: rgba(0,0,0,0.1); border-radius: 32px; height: 10px; overflow: visible; margin-bottom: 14px; position: relative; }
     .bar-fill { height: 100%; border-radius: 32px; transition: width 0.5s ease; }
     .bar-percent {
       position: absolute;
@@ -172,12 +171,12 @@
     }
     .agents-table td {
       padding: 12px 8px 12px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
       color: var(--text-secondary);
       vertical-align: middle;
     }
     .agents-table tr:last-child td { border-bottom: none; }
-    .agents-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .agents-table tr:hover td { background: rgba(0,0,0,0.02); }
     .highlight-number { font-weight: 700; color: var(--text-primary); font-family: monospace; font-size: 0.9rem; }
     .badge-agent { background: rgba(100,100,120,0.2); color: #cbd5e6; padding: 3px 10px; border-radius: 30px; font-size: 0.7rem; font-weight: 600; display: inline-block; }
 
@@ -194,18 +193,53 @@
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
     .kpi-card { animation: fadeUp 0.4s ease both; }
     
-    /* Ajustes específicos para que las etiquetas de ejes no se corten */
     canvas { max-width: 100%; }
+
+    .inverted-triangle-funnel {
+      background: var(--surface);
+      border-radius: 32px;
+      padding: 30px 20px 40px 20px;
+      margin-top: 12px;
+      position: relative;
+    }
+    .funnel-stage-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .funnel-shape {
+      background: linear-gradient(95deg, #2C5F8A, #3a3a3a);
+      border-radius: 60px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      transition: width 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border: 1px solid #b0b0b0;
+      min-width: 180px;
+    }
+    .funnel-label-text { font-weight: 800; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; background: rgba(0,0,0,0.5); padding: 4px 12px; border-radius: 40px; color: white; }
+    .funnel-value-number { font-family: 'DM Mono', monospace; font-weight: 700; font-size: 1rem; background: #00000066; padding: 4px 12px; border-radius: 32px; color: #f0f0f0; }
+    .funnel-percent { font-family: 'DM Mono', monospace; font-weight: bold; background: #6c6c6c; color: white; border-radius: 40px; padding: 4px 12px; font-size: 0.75rem; }
+    .connector-line { height: 20px; width: 3px; background: linear-gradient(to bottom, #7a7a7a, #9e9e9e); margin: 6px auto; }
+    
+    .chart-card .total-badge { bottom: 12px; right: 12px; font-size: 0.65rem; background: #11161f; z-index: 5; }
+    .chart-container canvas { max-height: 220px; width: 100%; }
+    @media (max-width: 640px) { .chart-container canvas { max-height: 200px; } .total-badge { font-size: 0.6rem; } }
+    .agents-table td, .agents-table th { white-space: nowrap; }
   </style>
 </head>
 <body>
 <div class="dashboard">
   <div class="page-header">
-    <div class="header-left"><h1>Mayo </h1></div>
+    <div class="header-left"><h1>MAYO</h1></div>
   </div>
 
   <div class="kpi-grid">
-    <div class="kpi-card"><div class="kpi-icon-wrap"><i class="fas fa-phone-volume"></i></div><div class="kpi-value">20,441</div><div class="kpi-label">Llamadas realizadas</div><div class="kpi-sub">Total agentes</div></div>
+    <div class="kpi-card"><div class="kpi-icon-wrap"><i class="fas fa-phone-volume"></i></div><div class="kpi-value" id="totalLlamadasKPI">20,441</div><div class="kpi-label">Llamadas realizadas</div><div class="kpi-sub">Total agentes</div></div>
     <div class="kpi-card"><div class="kpi-icon-wrap"><i class="fas fa-handshake"></i></div><div class="kpi-value">$320,362.97</div><div class="kpi-label">Vendido (DIMEX)</div><div class="kpi-sub"></div></div>
     <div class="kpi-card"><div class="kpi-icon-wrap"><i class="fas fa-address-card"></i></div><div class="kpi-value">$215,000</div><div class="kpi-label">Vendido (Multiva)</div><div class="kpi-sub"></div></div>
     <div class="kpi-card"><div class="kpi-icon-wrap"><i class="fas fa-chart-line"></i></div><div class="kpi-value" id="kpiRatio">29%</div><div class="kpi-label">Contactabilidad</div><div class="kpi-sub"></div></div>
@@ -226,6 +260,11 @@
       <div class="progress-bar-label"><span>🔄 Transferido: <strong>$1,561,362.90</strong></span><span>Meta: $3,100,000</span></div>
       <div class="bar-track"><div class="bar-fill" id="multivaTransferFill" style="background: #6b7280; width: 0%;"></div><span class="bar-percent" id="multivaTransferPercent">0%</span></div>
     </div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-header"><div class="chart-title">📊 Embudo de Conversión</div></div>
+    <div class="inverted-triangle-funnel" id="funnelRoot"></div>
   </div>
 
   <div class="section-label">Tipificación y Gestión</div>
@@ -281,7 +320,6 @@
   if (typeof ChartDataLabels !== 'undefined') Chart.register(ChartDataLabels);
   
   const greyPalette = ['#6B4E71', '#2C5F8A', '#489B9C', '#D9933B', '#A23B72', '#5E7B52', '#C2571A', '#6B4E71'];
-  const greyBarColors = ['#6b7280', '#9ca3af', '#4b5563', '#7e8a98'];
   
   const datalabelsConfigGrey = {
     color: '#f0f4fa',
@@ -298,12 +336,29 @@
     }
   };
 
+  // --- DEFINICIÓN DE DATOS FALTANTES ---
+  
+  // Datos del embudo
+  const EMBUDO = {
+    llamadasTotales: 20441,
+    contactables: 6123,
+    transferidas: 2703,
+    ventasCerradas: 535
+  };
+  
+  // Datos de contacto por agente
+  const AGENTES_CONTACTO = [
+    { nombre: "Paula", noInteresa: 1200, contacto3ro: 500, interesado: 745, noSujeto: 300, totalLlam: 3676, contactables: 2245, pctContacto: 61.1 },
+    { nombre: "Jesus", noInteresa: 800, contacto3ro: 400, interesado: 893, noSujeto: 200, totalLlam: 2522, contactables: 2093, pctContacto: 83.0 },
+    { nombre: "Stefan", noInteresa: 400, contacto3ro: 200, interesado: 1183, noSujeto: 100, totalLlam: 1986, contactables: 1783, pctContacto: 89.8 }
+  ];
+
   // --- VALORES MANUALES (ventas) ---
   const ventasManual = { DIMEX: 320362.97, MULTIVA: 215000, PYMIO: 0 };
   
   // Datos tipificacion
   const tipiData = [2414, 1000, 959, 797, 559, 232, 173];
-  const tipiLabels = ['Se corta llamada','No le interesa','Cliente cuelga',  'No se encuentra',  'Tel equivocado', 'Poca disposición', 'Tiene dinero suficiente'];
+  const tipiLabels = ['Se corta llamada','No le interesa','Cliente cuelga', 'No se encuentra', 'Tel equivocado', 'Poca disposición', 'Tiene dinero suficiente'];
   const tipiTotal = tipiData.reduce((a,b)=>a+b,0);
   const tipiCtx = document.getElementById('multivaTipiChart')?.getContext('2d');
   if (tipiCtx) {
@@ -315,19 +370,44 @@
     document.getElementById('tipiTotalBadge').innerText = `Total: ${tipiTotal}`;
   }
 
-  // Gestión datos (escala gris)
+  // Embudo de conversión
+  const funnelData = [
+    { name: "📞 Llamadas Totales", value: EMBUDO.llamadasTotales, prefix: "", color: "#5a5a5a" },
+    { name: "✅ Contactables", value: EMBUDO.contactables, prefix: "", color: "#4a4a4a" },
+    { name: "🔄 Transferidas", value: EMBUDO.transferidas, prefix: "", color: "#6c6c6c" },
+    { name: "💰 Ventas Cerradas", value: EMBUDO.ventasCerradas, prefix: "", color: "#3d3d3d" }
+  ];
+  const maxVal = funnelData[0].value;
+  const funnelRoot = document.getElementById('funnelRoot');
+  if (funnelRoot) {
+    funnelRoot.innerHTML = '';
+    funnelData.forEach((stage, idx) => {
+      const widthPercent = (stage.value / maxVal) * 100;
+      const convPercent = idx===0 ? 100 : ((stage.value/funnelData[0].value)*100).toFixed(1);
+      const container = document.createElement('div'); container.className = 'funnel-stage-item';
+      const bar = document.createElement('div'); bar.className = 'funnel-shape';
+      bar.style.width = `${widthPercent}%`;
+      bar.style.background = `linear-gradient(95deg, #2C5F8A, #6B4E71)`;
+      bar.innerHTML = `<span class="funnel-label-text">${stage.name}</span><span class="funnel-value-number">${stage.prefix}${stage.value.toLocaleString()}</span><span class="funnel-percent">⬇ ${convPercent}%</span>`;
+      container.appendChild(bar);
+      if (idx < funnelData.length-1) { const conn = document.createElement('div'); conn.className = 'connector-line'; container.appendChild(conn); }
+      funnelRoot.appendChild(container);
+    });
+  }
+
+  // Gestión datos
   const gestionData = [0, 115, 9, 1, 46, 4, 10, 15];
-  const gestionLabels = ['Aprobado (0)', 'Ya no contesta (115)', 'Atraso DIMEX (9)', 'En proceso (1)', 'Sin convenio (46)', 'Desconfianza (4)', 'Buro de Crédito (10)', 'Espera de respuesta (15)'];
+  const gestionLabels = ['Aprobado', 'Ya no contesta', 'Atraso DIMEX', 'En proceso', 'Sin convenio', 'Desconfianza', 'Buro de Crédito', 'Espera de respuesta'];
   const gestionTotal = gestionData.reduce((a,b)=>a+b,0);
   const gestionCtx = document.getElementById('multivaGestionChart')?.getContext('2d');
   if (gestionCtx) {
-    new Chart(gestionCtx, { type: 'doughnut', data: { labels: gestionLabels, datasets: [{ data: gestionData, backgroundColor: greyPalette.slice(0,7), borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#080809', boxWidth: 10, font: { size: 9 } } }, datalabels: { formatter: (value) => { let pct = ((value / gestionTotal) * 100).toFixed(1); return `${pct}%`; }, ...datalabelsConfigGrey } }, cutout: '60%' } });
+    new Chart(gestionCtx, { type: 'doughnut', data: { labels: gestionLabels, datasets: [{ data: gestionData, backgroundColor: greyPalette.slice(0,8), borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#080809', boxWidth: 10, font: { size: 9 } } }, datalabels: { formatter: (value) => { let pct = ((value / gestionTotal) * 100).toFixed(1); return `${pct}%`; }, ...datalabelsConfigGrey } }, cutout: '60%' } });
     document.getElementById('gestionTotalBadge').innerText = `Total: ${gestionTotal}`;
   }
 
   // Estatus DIMEX
-  const statusData = [11, 20, 3, 4, 1, 5,2];
-  const statusLabels = ['Aprobado (11)', 'Buró de Crédito (20)', 'Cancelado (3)', 'Sin capacidad (4)', 'Declina oferta (1)', 'En seguimiento (5)','En recuperación (2)'];
+  const statusData = [11, 20, 3, 4, 1, 5, 2];
+  const statusLabels = ['Aprobado', 'Buró de Crédito', 'Cancelado', 'Sin capacidad', 'Declina oferta', 'En seguimiento', 'En recuperación'];
   const statusTotal = statusData.reduce((a,b)=>a+b,0);
   const statusCtx = document.getElementById('abrilStatusChart')?.getContext('2d');
   if (statusCtx) {
@@ -336,16 +416,16 @@
   }
 
   // Estatus Multiva
-  const pipeData = [2, 2, 12, 3,1];
-  const pipeLabels = ['Comprado (2)', 'En proceso (2)', 'Sin capacidad (12)', 'Cancelado (3)', 'En seguimiento (1)'];
+  const pipeData = [2, 2, 12, 3, 1];
+  const pipeLabels = ['Comprado', 'En proceso', 'Sin capacidad', 'Cancelado', 'En seguimiento'];
   const pipeTotal = pipeData.reduce((a,b)=>a+b,0);
   const multivaPipeCtx = document.getElementById('multivaEstatusPipelineChart')?.getContext('2d');
   if (multivaPipeCtx) {
-    new Chart(multivaPipeCtx, { type: 'doughnut', data: { labels: pipeLabels, datasets: [{ data: pipeData, backgroundColor: greyPalette.slice(0,7), borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#080809', boxWidth: 10, font: { size: 9 } } }, datalabels: { formatter: (value) => { let pct = ((value / pipeTotal) * 100).toFixed(1); return `${pct}%`; }, ...datalabelsConfigGrey } }, cutout: '60%' } });
+    new Chart(multivaPipeCtx, { type: 'doughnut', data: { labels: pipeLabels, datasets: [{ data: pipeData, backgroundColor: greyPalette.slice(0,5), borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#080809', boxWidth: 10, font: { size: 9 } } }, datalabels: { formatter: (value) => { let pct = ((value / pipeTotal) * 100).toFixed(1); return `${pct}%`; }, ...datalabelsConfigGrey } }, cutout: '60%' } });
     document.getElementById('multivaPipeTotalBadge').innerText = `Total: ${pipeTotal}`;
   }
 
-  // AGENTES (se mantienen nombres completos + valores)
+  // AGENTES (datos de performance)
   const agentes = [
     { nombre: "Paula", llamadas: 3676, contactos: 745, vendido: 242318, transferido: 1172044.33 },
     { nombre: "Jesus", llamadas: 2522, contactos: 893, vendido: 245844, transferido: 627297 },
@@ -359,11 +439,13 @@
   const totalTransferido = agentes.reduce((s,a)=> s + a.transferido, 0);
 
   document.getElementById('kpiRatio').innerText = `${ratioGlobal}%`;
+  document.getElementById('totalLlamadasKPI').innerText = totalLlamadas.toLocaleString();
   document.getElementById('totalTransferBadge').innerHTML = `Total transferido: $${totalTransferido.toLocaleString('es-MX')}`;
   document.getElementById('ventasTotalBadge').innerHTML = `Ventas totales: $${totalVendido.toLocaleString('es-MX')}`;
   document.getElementById('ratioMediaEquipo').innerText = `${ratioGlobal}%`;
+  document.getElementById('llamadasTotalBadge').innerHTML = `Total Llamadas: ${totalLlamadas}`;
 
-  // Tabla
+  // Tabla de agentes
   const tbody = document.getElementById('tablaAgentesBody');
   function renderTabla() {
     tbody.innerHTML = '';
@@ -376,9 +458,8 @@
   }
   renderTabla();
 
-  // ----- GRÁFICA DE LLAMADAS vs CONTACTOS (ajustada para NO tapar nombres) -----
+  // GRÁFICA DE LLAMADAS vs CONTACTOS
   const ctxLlamadas = document.getElementById('agentesLlamadasChart').getContext('2d');
-  // Se incrementa el espacio inferior mediante layout padding y se reduce tamaño de leyenda
   new Chart(ctxLlamadas, {
     type: 'bar',
     data: { labels: agentes.map(a => a.nombre), datasets: [{ label: 'Llamadas realizadas', data: agentes.map(a => a.llamadas), backgroundColor: '#2C5F8A', borderRadius: 6 }, { label: 'Contactos efectivos', data: agentes.map(a => a.contactos), backgroundColor: '#6B4E71', borderRadius: 6 }] },
@@ -389,7 +470,7 @@
       plugins: { 
         legend: { labels: { color: '#080809', font: { size: 10 } }, position: 'top' },
         tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw}` } },
-       datalabels: { color: 'white', backgroundColor: 'rgba(30,30,40,0.7)', borderRadius: 8, formatter: (ctx) => `${ctx}`, font: { size: 10, weight: 'bold' } }  // evitamos que se superpongan sobre nombres
+        datalabels: { color: 'white', backgroundColor: 'rgba(30,30,40,0.7)', borderRadius: 8, formatter: (ctx) => `${ctx}`, font: { size: 10, weight: 'bold' } }
       }, 
       scales: { 
         y: { ticks: { color: '#080809' }, grid: { color: '#c0c0c6' } }, 
@@ -397,9 +478,8 @@
       } 
     }
   });
-  document.getElementById('llamadasTotalBadge').innerText = `Total Llamadas: ${totalLlamadas}`;
 
-  // Gráfica Ratio Contacto (barras verticales con espacio)
+  // Gráfica Ratio Contacto
   const ratios = agentes.map(a => a.llamadas ? parseFloat(((a.contactos / a.llamadas)*100).toFixed(1)) : 0);
   const ctxRatio = document.getElementById('ratioContactoChart').getContext('2d');
   new Chart(ctxRatio, {
@@ -419,7 +499,7 @@
     }
   });
 
-  // Gráfica Monto Transferido (mejor visual de nombres)
+  // Gráfica Monto Transferido
   const ctxTransfer = document.getElementById('transferidoAgenteChart').getContext('2d');
   new Chart(ctxTransfer, {
     type: 'bar',
@@ -439,13 +519,13 @@
     }
   });
 
-  // Gráfica Distribución Ventas (Grises)
+  // Gráfica Distribución Ventas
   const ctxVentas = document.getElementById('ventasProductoChart').getContext('2d');
   new Chart(ctxVentas, {
     type: 'doughnut',
     data: { 
       labels: ['DIMEX (Aprobado)', 'Multiva Comprado', 'PYMIO'], 
-      datasets: [{ data: [ventasManual.DIMEX, ventasManual.MULTIVA, ventasManual.PYMIO], backgroundColor: greyPalette.slice(0,7), borderWidth: 0 }] 
+      datasets: [{ data: [ventasManual.DIMEX, ventasManual.MULTIVA, ventasManual.PYMIO], backgroundColor: greyPalette.slice(0,3), borderWidth: 0 }] 
     },
     options: { 
       responsive: true, maintainAspectRatio: false, 
@@ -469,22 +549,9 @@
     }
   }
   updateProgress('dimexCompradoFill', 'dimexCompradoPercent', 320362.97, 500000);
-  updateProgress('dimexTransferFill', 'dimexTransferPercent', 1142453.67, 700000);
+  updateProgress('dimexTransferFill', 'dimexTransferPercent', 1142453.67, 1000000);
   updateProgress('multivaCompradoFill', 'multivaCompradoPercent', 215000, 1550000);
-  updateProgress('multivaTransferFill', 'multivaTransferPercent', 1561362.90, 3000000);
-  
-  // Aseguramos que los total-badge no oculten nombre de agente en gráficos de barras: 
-  // se mantienen en la esquina inferior derecha y no bloquean etiquetas.
-  // También ajuste manual de estilos en canvas para que no se recorten los nombres
-  const styleFix = document.createElement('style');
-  styleFix.textContent = `
-    .chart-card .total-badge { bottom: 12px; right: 12px; font-size: 0.65rem; background: #11161f; z-index: 5; }
-    canvas { width: 100% !important; height: auto !important; }
-    .chart-container canvas { max-height: 220px; width: 100%; }
-    @media (max-width: 640px) { .chart-container canvas { max-height: 200px; } .total-badge { font-size: 0.6rem; } }
-    .agents-table td, .agents-table th { white-space: nowrap; }
-  `;
-  document.head.appendChild(styleFix);
+  updateProgress('multivaTransferFill', 'multivaTransferPercent', 1561362.90, 3100000);
 })();
 </script>
 </body>
