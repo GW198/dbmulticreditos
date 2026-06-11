@@ -1,651 +1,851 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Multicréditos</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <title>Multicréditos · Mayo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #e9e9e9;
-      --surface: #f5f5f5;
-      --surface-2: #e9e9e9;
-      --border: #cccccc;
-      --border-bright: rgba(255,255,255,0.12);
-      --accent-light: #d4d4d4;
-      --accent-mid: #5E7B52;
-      --accent-graph: #5E7B52;
-      --accent-dark: #5E7B52;
-      --green-gray: #2d3a3e;
-      --blue-gray: #2c3e50;
-      --gold-gray: #7a6e4b;
-      --purple-gray: #5E7B52;
-      --text-primary: #000000;
-      --text-secondary: #022d75;
-      --text-muted: #062461;
-      --radius: 20px;
-      --radius-sm: 12px;
+      --white:       #ffffff;
+      --off-white:   #f8f9fb;
+      --gray-50:     #f3f4f6;
+      --gray-100:    #e8eaee;
+      --gray-200:    #d1d5db;
+      --gray-400:    #9ca3af;
+      --gray-600:    #4b5563;
+      --gray-800:    #1f2937;
+      --gray-900:    #111827;
+
+      --ink:         #0d1117;
+      --ink-mid:     #374151;
+      --ink-light:   #6b7280;
+
+      --accent:      #1a56db;
+      --accent-2:    #7c3aed;
+      --accent-3:    #059669;
+      --accent-4:    #d97706;
+
+      --accent-soft: rgba(26,86,219,0.08);
+      --radius-lg:   16px;
+      --radius-md:   10px;
+      --radius-sm:   6px;
+      --shadow-sm:   0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md:   0 4px 16px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04);
     }
 
     body {
-      background: var(--bg);
-      font-family: 'DM Sans', sans-serif;
-      color: var(--text-primary);
+      background: var(--off-white);
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
       min-height: 100vh;
-      padding: 36px 28px 60px;
-      background-image: radial-gradient(ellipse 70% 40% at 20% -10%, rgba(100,100,120,0.08) 0%, transparent 60%);
     }
 
-    .dashboard { max-width: 1400px; margin: 0 auto; }
+    /* ── SIDEBAR ── */
+    .layout { display: flex; min-height: 100vh; }
 
-    .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 36px; flex-wrap: wrap; gap: 16px; }
-    .header-left h1 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 2rem; letter-spacing: -0.01em; color: var(--text-primary); }
-    .header-left h1 span { color: var(--accent-light); font-weight: 600; border-bottom: 2px solid var(--accent-mid); }
-    .section-label {
-      font-size: 0.7rem;
+    .sidebar {
+      width: 220px;
+      min-height: 100vh;
+      background: var(--ink);
+      padding: 28px 16px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 100;
+    }
+
+    .sidebar-logo {
+      font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-mid);
-      margin-bottom: 14px;
+      font-size: 1.15rem;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+      padding: 0 8px;
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
 
+    .nav-section-label {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #4b5563;
+      padding: 0 8px;
+      margin: 16px 0 6px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #9ca3af;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.06); color: #e5e7eb; }
+    .nav-item.active { background: rgba(26,86,219,0.18); color: #60a5fa; }
+    .nav-item i { width: 16px; text-align: center; font-size: 0.8rem; }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 0 8px;
+      font-size: 0.7rem;
+      color: #374151;
+    }
+
+    /* ── MAIN ── */
+    .main {
+      margin-left: 220px;
+      flex: 1;
+      padding: 32px 28px 60px;
+      min-width: 0;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+    .topbar-left { display: flex; flex-direction: column; gap: 4px; }
+    .topbar-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .topbar-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+    }
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pill-tag {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 30px;
+      letter-spacing: 0.02em;
+    }
+    .pill-tag.green { background: rgba(5,150,105,0.1); color: var(--accent-3); }
+
+    /* ── KPI GRID ── */
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 28px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 22px;
     }
     .kpi-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px 20px;
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius-lg);
+      padding: 20px 20px 18px;
+      box-shadow: var(--shadow-sm);
       position: relative;
-      transition: border-color 0.2s, transform 0.2s;
+      overflow: hidden;
     }
-    .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: var(--radius) var(--radius) 0 0; background: linear-gradient(90deg, var(--accent-mid), transparent); }
-    .kpi-icon-wrap { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; background: #000000; color: var(--accent-light); }
-    .kpi-value { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 700; line-height: 1; color: var(--text-primary); }
-    .kpi-label { font-size: 0.82rem; color: var(--text-secondary); margin-top: 6px; font-weight: 500; }
-    .kpi-sub { margin-top: 12px; font-size: 0.72rem; color: var(--text-muted); background: rgba(255,255,255,0.04); border-radius: 20px; padding: 4px 10px; display: inline-block; }
-
-    .progress-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
-    .progress-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; }
-    .progress-title { font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 8px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border); color: var(--text-primary); }
-    .progress-title i { color: var(--accent-mid); }
-    .progress-bar-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 6px; }
-    .bar-track { background: rgba(0,0,0,0.1); border-radius: 32px; height: 10px; overflow: visible; margin-bottom: 14px; position: relative; }
-    .bar-fill { height: 100%; border-radius: 32px; transition: width 0.5s ease; }
-    .bar-percent {
+    .kpi-card::after {
+      content: '';
       position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.65rem;
+      top: 0; right: 0;
+      width: 60px; height: 60px;
+      border-radius: 0 var(--radius-lg) 0 60px;
+      background: var(--kpi-color, var(--accent-soft));
+      opacity: 0.6;
+    }
+    .kpi-card[data-color="blue"]   { --kpi-color: rgba(26,86,219,0.07); }
+    .kpi-card[data-color="purple"] { --kpi-color: rgba(124,58,237,0.07); }
+    .kpi-card[data-color="green"]  { --kpi-color: rgba(5,150,105,0.07); }
+
+    .kpi-top { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .kpi-icon {
+      width: 34px; height: 34px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .kpi-icon.blue   { background: rgba(26,86,219,0.1);  color: var(--accent); }
+    .kpi-icon.purple { background: rgba(124,58,237,0.1); color: var(--accent-2); }
+    .kpi-icon.green  { background: rgba(5,150,105,0.1);  color: var(--accent-3); }
+
+    .kpi-label-top { font-size: 0.72rem; font-weight: 600; color: var(--ink-light); text-transform: uppercase; letter-spacing: 0.06em; }
+    .kpi-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.2rem;
       font-weight: 700;
-      background: rgba(0,0,0,0.7);
-      padding: 2px 6px;
-      border-radius: 12px;
-      backdrop-filter: blur(4px);
-      pointer-events: none;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .kpi-meta { font-size: 0.72rem; color: var(--ink-light); margin-top: 6px; }
+
+    /* ── DIVIDER LABEL ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 0 14px;
+    }
+    .section-header-line { flex: 1; height: 1px; background: var(--gray-100); }
+    .section-header-text {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-light);
       white-space: nowrap;
-      color: #e5e7eb;
     }
 
-    .charts-row {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      margin-bottom: 28px;
+    /* ── PROGRESS CARDS ── */
+    .progress-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+    .progress-card {
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius-lg);
+      padding: 20px 22px;
+      box-shadow: var(--shadow-sm);
     }
-    .chart-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      position: relative;
-    }
-    .chart-title {
+    .progress-card-title {
+      font-size: 0.82rem;
       font-weight: 700;
-      font-size: 0.95rem;
+      color: var(--ink);
+      margin-bottom: 18px;
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-      color: var(--text-primary);
     }
-    .chart-title i { color: var(--accent-mid); }
-    .chart-container { position: relative; height: 240px; width: 100%; }
-    .total-badge {
-      position: absolute;
-      bottom: 16px;
-      right: 20px;
-      background: rgba(0,0,0,0.65);
-      backdrop-filter: blur(5px);
-      border-radius: 30px;
-      padding: 4px 12px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--accent-light);
-      border: 1px solid rgba(200,200,200,0.25);
-      z-index: 12;
-      pointer-events: none;
-      font-family: monospace;
+    .progress-card-title i { color: var(--accent); font-size: 0.8rem; }
+
+    .bar-row { margin-bottom: 14px; }
+    .bar-meta { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--ink-light); margin-bottom: 6px; }
+    .bar-meta strong { color: var(--ink); font-weight: 600; }
+    .bar-track {
+      background: var(--gray-100);
+      border-radius: 99px;
+      height: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      transition: width 0.7s cubic-bezier(0.4,0,0.2,1);
+      position: relative;
+    }
+    .bar-fill.blue   { background: linear-gradient(90deg, #1a56db, #3b82f6); }
+    .bar-fill.purple { background: linear-gradient(90deg, #7c3aed, #a855f7); }
+    .bar-pct {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--ink-light);
+      margin-top: 3px;
+      text-align: right;
     }
 
-    .agents-table-wrapper {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+    /* ── CHART CARDS ── */
+    .charts-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 22px; }
+    .chart-card {
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius-lg);
       padding: 20px;
-      margin-bottom: 28px;
-      overflow-x: auto;
+      box-shadow: var(--shadow-sm);
+      position: relative;
     }
-    .agents-table {
+    .chart-card.full-width { grid-column: 1 / -1; }
+
+    .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .chart-title { font-size: 0.82rem; font-weight: 700; color: var(--ink); display: flex; align-items: center; gap: 7px; }
+    .chart-title i { color: var(--accent); }
+
+    .chart-badge {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--ink-light);
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
+    .chart-container { position: relative; height: 230px; width: 100%; }
+
+    /* ── FUNNEL ── */
+    .funnel-wrap {
+      padding: 10px 0 4px;
+    }
+    .funnel-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .funnel-bar {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-radius: 10px;
+      transition: width 0.9s cubic-bezier(0.2,0.9,0.4,1);
+      min-width: 160px;
+      max-width: 100%;
+      position: relative;
+    }
+    .funnel-stage-name { font-size: 0.8rem; font-weight: 600; color: #fff; }
+    .funnel-stage-val  { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; color: #fff; }
+    .funnel-stage-pct  { font-size: 0.7rem; font-weight: 600; background: rgba(0,0,0,0.2); color: #fff; padding: 2px 8px; border-radius: 20px; }
+    .funnel-connector  { width: 2px; height: 18px; background: var(--gray-200); margin: 4px auto; }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      overflow-x: auto;
+      margin-bottom: 22px;
+    }
+    .dash-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.82rem;
-      min-width: 700px;
+      font-size: 0.8rem;
+      min-width: 680px;
     }
-    .agents-table th {
+    .dash-table th {
       text-align: left;
-      padding: 12px 8px 12px 0;
-      font-size: 0.7rem;
+      padding: 10px 12px 10px 0;
+      font-size: 0.65rem;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--text-muted);
-      border-bottom: 1px solid var(--border);
+      color: var(--ink-light);
+      border-bottom: 1px solid var(--gray-100);
     }
-    .agents-table td {
-      padding: 12px 8px 12px 0;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-      color: var(--text-secondary);
+    .dash-table td {
+      padding: 11px 12px 11px 0;
+      border-bottom: 1px solid var(--gray-50);
+      color: var(--ink-mid);
       vertical-align: middle;
     }
-    .agents-table tr:last-child td { border-bottom: none; }
-    .agents-table tr:hover td { background: rgba(0,0,0,0.02); }
-    .highlight-number { font-weight: 700; color: var(--text-primary); font-family: monospace; font-size: 0.9rem; }
-    .badge-agent { background: rgba(100,100,120,0.2); color: #cbd5e6; padding: 3px 10px; border-radius: 30px; font-size: 0.7rem; font-weight: 600; display: inline-block; }
+    .dash-table tr:last-child td { border-bottom: none; }
+    .dash-table tr:hover td { background: var(--off-white); }
+    .cell-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      color: var(--ink);
+      font-size: 0.85rem;
+    }
+    .agent-name {
+      font-weight: 600;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .agent-avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
 
+    /* ── RESPONSIVE ── */
     @media (max-width: 1100px) {
       .kpi-grid { grid-template-columns: repeat(2, 1fr); }
       .charts-row { grid-template-columns: 1fr; }
       .progress-row { grid-template-columns: 1fr; }
     }
-    @media (max-width: 640px) {
-      body { padding: 20px 14px 40px; }
+    @media (max-width: 780px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 20px 16px 40px; }
       .kpi-grid { grid-template-columns: 1fr; }
-      .chart-container { height: 220px; }
+      .chart-container { height: 200px; }
     }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-    .kpi-card { animation: fadeUp 0.4s ease both; }
-    
-    canvas { max-width: 100%; }
 
-    .inverted-triangle-funnel {
-      background: var(--surface);
-      border-radius: 32px;
-      padding: 30px 20px 40px 20px;
-      margin-top: 12px;
-      position: relative;
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
-    .funnel-stage-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .funnel-shape {
-      background: linear-gradient(95deg, #2C5F8A, #3a3a3a);
-      border-radius: 60px;
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 28px;
-      transition: width 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.2);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      border: 1px solid #b0b0b0;
-      min-width: 180px;
-    }
-    .funnel-label-text { font-weight: 800; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; background: rgba(0,0,0,0.5); padding: 4px 12px; border-radius: 40px; color: white; }
-    .funnel-value-number { font-family: 'DM Mono', monospace; font-weight: 700; font-size: 1rem; background: #00000066; padding: 4px 12px; border-radius: 32px; color: #f0f0f0; }
-    .funnel-percent { font-family: 'DM Mono', monospace; font-weight: bold; background: #6c6c6c; color: white; border-radius: 40px; padding: 4px 12px; font-size: 0.75rem; }
-    .connector-line { height: 20px; width: 3px; background: linear-gradient(to bottom, #7a7a7a, #9e9e9e); margin: 6px auto; }
-    
-    .chart-card .total-badge { bottom: 12px; right: 12px; font-size: 0.65rem; background: #11161f; z-index: 5; }
-    .chart-container canvas { max-height: 220px; width: 100%; }
-    @media (max-width: 640px) { .chart-container canvas { max-height: 200px; } .total-badge { font-size: 0.6rem; } }
-    .agents-table td, .agents-table th { white-space: nowrap; }
+    .kpi-card { animation: fadeUp 0.35s ease both; }
+    .kpi-card:nth-child(2) { animation-delay: 0.06s; }
+    .kpi-card:nth-child(3) { animation-delay: 0.12s; }
   </style>
 </head>
 <body>
-<div class="dashboard">
-  <div class="page-header">
-    <div class="header-left"><h1> MAYO </h1></div>
-  </div>
+<div class="layout">
 
-  <div class="kpi-grid">
-    <div hidden class="kpi-card"><div class="kpi-icon-wrap"><i class="fas fa-phone-volume"></i></div><div class="kpi-value" id="totalLlamadasDisplay">3,448</div><div class="kpi-label">Llamadas realizadas</div><div class="kpi-sub">Total agentes</div></div>
-    <div class="kpi-card"><div class="kpi-icon-wrap"><i class="fas fa-phone-volume"></i></div><div class="kpi-value">3,448</div><div class="kpi-label">Llamadas realizadas</div><div class="kpi-sub">Total agentes</div></div>
-    <div class="kpi-card"><div class="kpi-icon-wrap"><i class="fas fa-handshake"></i></div><div class="kpi-value">$0</div><div class="kpi-label">Vendido (DIMEX)</div><div class="kpi-sub"></div></div>
-    <div class="kpi-card"><div class="kpi-icon-wrap"><i class="fas fa-address-card"></i></div><div class="kpi-value">$520,000</div><div class="kpi-label">Vendido (Multiva)</div><div class="kpi-sub"></div></div>
-    <div hidden class="kpi-card"><div class="kpi-icon-wrap"><i class="fas fa-chart-line"></i></div><div class="kpi-value" id="kpiRatio">0%</div><div class="kpi-label">Contactabilidad</div><div class="kpi-sub"></div></div>
-    <div class="kpi-card"><div class="kpi-icon-wrap"><i class="fas fa-chart-line"></i></div><div class="kpi-value">26.62%</div><div class="kpi-label">Contactabilidad</div><div class="kpi-sub"></div></div>
-  </div>
-
-  <div class="progress-row">
-    <div class="progress-card">
-      <div class="progress-title"><i class="fas fa-chart-simple"></i> DIMEX · Meta Compra / Transferido</div>
-      <div class="progress-bar-label"><span>✅ Comprado: <strong>$0</strong></span><span>Meta: $600,000</span></div>
-      <div class="bar-track"><div class="bar-fill" id="dimexCompradoFill" style="background: #4b5563; width: 0%;"></div><span class="bar-percent" id="dimexCompradoPercent">0%</span></div>
-      <div class="progress-bar-label"><span>🔄 Transferido: <strong>$165,000</strong></span><span>Meta: $1,200,000</span></div>
-      <div class="bar-track"><div class="bar-fill" id="dimexTransferFill" style="background: #6b7280; width: 0%;"></div><span class="bar-percent" id="dimexTransferPercent">0%</span></div>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-dot"></span>
+      Multicréditos
     </div>
-    <div class="progress-card">
-      <div class="progress-title"><i class="fas fa-building-columns"></i> MULTIVA KAPI · Meta Compra / Transferido</div>
-      <div class="progress-bar-label"><span>✅ Comprado: <strong>$520,000</strong></span><span>Meta: $1,550,000</span></div>
-      <div class="bar-track"><div class="bar-fill" id="multivaCompradoFill" style="background: #4b5563; width: 0%;"></div><span class="bar-percent" id="multivaCompradoPercent">0%</span></div>
-      <div class="progress-bar-label"><span>🔄 Transferido: <strong>$640,000</strong></span><span>Meta: $3,000,000</span></div>
-      <div class="bar-track"><div class="bar-fill" id="multivaTransferFill" style="background: #6b7280; width: 0%;"></div><span class="bar-percent" id="multivaTransferPercent">0%</span></div>
+    <span class="nav-section-label">General</span>
+    <div class="nav-item active"><i class="fas fa-chart-line"></i> Dashboard Mayo</div>
+    <div class="nav-item"><i class="fas fa-users"></i> Agentes</div>
+    <div class="nav-item"><i class="fas fa-funnel-dollar"></i> Pipeline</div>
+    <span class="nav-section-label">Productos</span>
+    <div class="nav-item"><i class="fas fa-building-columns"></i> DIMEX</div>
+    <div class="nav-item"><i class="fas fa-landmark"></i> Multiva KAPI</div>
+    <div class="nav-item"><i class="fas fa-store"></i> PYMIO</div>
+    <span class="nav-section-label">Reportes</span>
+    <div class="nav-item"><i class="fas fa-file-chart-column"></i> Exportar</div>
+    <div class="sidebar-footer">v2.0 · Mayo 2025</div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-eyebrow">Reporte mensual</div>
+        <div class="topbar-title">Mayo 2025</div>
+      </div>
+      <div class="topbar-right">
+        <span class="pill-tag green"><i class="fas fa-circle" style="font-size:0.5rem;margin-right:5px;"></i> En curso</span>
+        <span class="pill-tag">2 Agentes activos</span>
+      </div>
     </div>
-  </div>
 
-  <div class="chart-card">
-    <div class="chart-header"><div class="chart-title">📊 Embudo de Conversión</div></div>
-    <div class="inverted-triangle-funnel" id="funnelRoot"></div>
-  </div>
-
-  <div class="section-label">Tipificación y Gestión</div>
-  <div class="charts-row">
-    <div class="chart-card"><div class="chart-title"><i class="fas fa-tags"></i> Tipificaciones</div><div class="chart-container"><canvas id="multivaTipiChart"></canvas></div><div class="total-badge" id="tipiTotalBadge">Total: 0</div></div>
-    <div class="chart-card"><div class="chart-title"><i class="fas fa-chart-donut"></i> Gestión Leads</div><div class="chart-container"><canvas id="multivaGestionChart"></canvas></div><div class="total-badge" id="gestionTotalBadge">Total: 0</div></div>
-  </div>
-
-  <div class="section-label">Estatus</div>
-  <div class="charts-row">
-    <div class="chart-card"><div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus DIMEX</div><div class="chart-container"><canvas id="abrilStatusChart"></canvas></div><div class="total-badge" id="dimexStatusTotalBadge">Total: 0</div></div>
-    <div class="chart-card"><div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus Multiva</div><div class="chart-container"><canvas id="multivaEstatusPipelineChart"></canvas></div><div class="total-badge" id="multivaPipeTotalBadge">Total: 0</div></div>
-  </div>
-
-  <div class="section-label">Rendimiento por Agente</div>
-  <div class="charts-row">
-    <div class="chart-card">
-      <div class="chart-title"><i class="fas fa-chart-simple"></i> Llamadas vs Contactos (Agentes)</div>
-      <div class="chart-container" style="position: relative;"><canvas id="agentesLlamadasChart"></canvas></div>
-      <div class="total-badge" id="llamadasTotalBadge">Total Llamadas: 0</div>
+    <!-- KPI CARDS -->
+    <div class="kpi-grid">
+      <div class="kpi-card" data-color="blue">
+        <div class="kpi-top">
+          <div class="kpi-icon blue"><i class="fas fa-phone-volume"></i></div>
+          <div class="kpi-label-top">Llamadas realizadas</div>
+        </div>
+        <div class="kpi-value">3,448</div>
+        <div class="kpi-meta">Total acumulado del equipo</div>
+      </div>
+      <div class="kpi-card" data-color="purple">
+        <div class="kpi-top">
+          <div class="kpi-icon purple"><i class="fas fa-handshake"></i></div>
+          <div class="kpi-label-top">Vendido (DIMEX + Multiva)</div>
+        </div>
+        <div class="kpi-value">$520,000</div>
+        <div class="kpi-meta">DIMEX $0 · Multiva $520,000</div>
+      </div>
+      <div class="kpi-card" data-color="green">
+        <div class="kpi-top">
+          <div class="kpi-icon green"><i class="fas fa-chart-line"></i></div>
+          <div class="kpi-label-top">Contactabilidad</div>
+        </div>
+        <div class="kpi-value">26.62%</div>
+        <div class="kpi-meta">Ratio promedio del equipo</div>
+      </div>
     </div>
-    <div class="chart-card">
-      <div class="chart-title"><i class="fas fa-chart-line"></i> Eficiencia por Agente (% Contacto)</div>
-      <div class="chart-container"><canvas id="ratioContactoChart"></canvas></div>
-      <div class="total-badge">Media Equipo: <span id="ratioMediaEquipo">0%</span></div>
-    </div>
-  </div>
 
-  <div class="charts-row">
-    <div class="chart-card">
-      <div class="chart-title"><i class="fas fa-dollar-sign"></i> Monto Transferido por Agente</div>
-      <div class="chart-container"><canvas id="transferidoAgenteChart"></canvas></div>
-      <div class="total-badge" id="totalTransferBadge">Total transferido: $0</div>
+    <!-- METAS PROGRESS -->
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <div class="section-header-text">Avance de metas</div>
+      <div class="section-header-line"></div>
     </div>
-    <div class="chart-card">
-      <div class="chart-title"><i class="fas fa-chart-pie"></i> Distribución de Ventas (Productos)</div>
-      <div class="chart-container"><canvas id="ventasProductoChart"></canvas></div>
-      <div class="total-badge" id="ventasTotalBadge">Ventas totales: $0</div>
+    <div class="progress-row">
+      <div class="progress-card">
+        <div class="progress-card-title"><i class="fas fa-chart-simple"></i> DIMEX · Meta Compra / Transferido</div>
+        <div class="bar-row">
+          <div class="bar-meta"><span>✅ Comprado: <strong>$0</strong></span><span>Meta: $600,000</span></div>
+          <div class="bar-track"><div class="bar-fill blue" id="dimexCompradoFill" style="width:0%"></div></div>
+          <div class="bar-pct" id="dimexCompradoPercent">0%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-meta"><span>🔄 Transferido: <strong>$165,000</strong></span><span>Meta: $1,200,000</span></div>
+          <div class="bar-track"><div class="bar-fill purple" id="dimexTransferFill" style="width:0%"></div></div>
+          <div class="bar-pct" id="dimexTransferPercent">0%</div>
+        </div>
+      </div>
+      <div class="progress-card">
+        <div class="progress-card-title"><i class="fas fa-building-columns"></i> MULTIVA KAPI · Meta Compra / Transferido</div>
+        <div class="bar-row">
+          <div class="bar-meta"><span>✅ Comprado: <strong>$520,000</strong></span><span>Meta: $1,550,000</span></div>
+          <div class="bar-track"><div class="bar-fill blue" id="multivaCompradoFill" style="width:0%"></div></div>
+          <div class="bar-pct" id="multivaCompradoPercent">0%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-meta"><span>🔄 Transferido: <strong>$640,000</strong></span><span>Meta: $3,000,000</span></div>
+          <div class="bar-track"><div class="bar-fill purple" id="multivaTransferFill" style="width:0%"></div></div>
+          <div class="bar-pct" id="multivaTransferPercent">0%</div>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="section-label">Agentes · Performance</div>
-  <div class="agents-table-wrapper">
-    <table class="agents-table">
-      <thead>
-        <tr><th>Agente</th><th>Llamadas realizadas</th><th>Contactos efectivos</th><th>Ratio Contacto</th><th>Transferido (DIMEX+Multiva)</th><th>Vendido (Aprobado)</th></tr>
-      </thead>
-      <tbody id="tablaAgentesBody"></tbody>
-    </table>
-  </div>
+    <!-- FUNNEL -->
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <div class="section-header-text">Embudo de conversión</div>
+      <div class="section-header-line"></div>
+    </div>
+    <div class="chart-card full-width" style="margin-bottom:22px;">
+      <div class="chart-header">
+        <div class="chart-title"><i class="fas fa-filter"></i> Pipeline de conversión</div>
+        <div class="chart-badge">Mayo 2025</div>
+      </div>
+      <div class="funnel-wrap" id="funnelRoot"></div>
+    </div>
+
+    <!-- TIPIFICACION & GESTION -->
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <div class="section-header-text">Tipificación y Gestión</div>
+      <div class="section-header-line"></div>
+    </div>
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title"><i class="fas fa-tags"></i> Tipificaciones</div>
+          <div class="chart-badge" id="tipiTotalBadge">Total: 0</div>
+        </div>
+        <div class="chart-container"><canvas id="multivaTipiChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title"><i class="fas fa-chart-donut"></i> Gestión Leads</div>
+          <div class="chart-badge" id="gestionTotalBadge">Total: 0</div>
+        </div>
+        <div class="chart-container"><canvas id="multivaGestionChart"></canvas></div>
+      </div>
+    </div>
+
+    <!-- ESTATUS -->
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <div class="section-header-text">Estatus por producto</div>
+      <div class="section-header-line"></div>
+    </div>
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus DIMEX</div>
+          <div class="chart-badge" id="dimexStatusTotalBadge">Total: 0</div>
+        </div>
+        <div class="chart-container"><canvas id="abrilStatusChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus Multiva</div>
+          <div class="chart-badge" id="multivaPipeTotalBadge">Total: 0</div>
+        </div>
+        <div class="chart-container"><canvas id="multivaEstatusPipelineChart"></canvas></div>
+      </div>
+    </div>
+
+    <!-- AGENTES CHARTS -->
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <div class="section-header-text">Rendimiento por agente</div>
+      <div class="section-header-line"></div>
+    </div>
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title"><i class="fas fa-chart-simple"></i> Llamadas vs Contactos</div>
+          <div class="chart-badge" id="llamadasTotalBadge">Total: 0</div>
+        </div>
+        <div class="chart-container"><canvas id="agentesLlamadasChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title"><i class="fas fa-chart-line"></i> Eficiencia (% Contacto)</div>
+          <div class="chart-badge">Media: <span id="ratioMediaEquipo">0%</span></div>
+        </div>
+        <div class="chart-container"><canvas id="ratioContactoChart"></canvas></div>
+      </div>
+    </div>
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title"><i class="fas fa-dollar-sign"></i> Monto Transferido por Agente</div>
+          <div class="chart-badge" id="totalTransferBadge">Total: $0</div>
+        </div>
+        <div class="chart-container"><canvas id="transferidoAgenteChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title"><i class="fas fa-chart-pie"></i> Distribución de Ventas</div>
+          <div class="chart-badge" id="ventasTotalBadge">Ventas: $0</div>
+        </div>
+        <div class="chart-container"><canvas id="ventasProductoChart"></canvas></div>
+      </div>
+    </div>
+
+    <!-- AGENTS TABLE -->
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <div class="section-header-text">Agentes · Performance</div>
+      <div class="section-header-line"></div>
+    </div>
+    <div class="table-wrap">
+      <table class="dash-table">
+        <thead>
+          <tr>
+            <th>Agente</th>
+            <th>Llamadas realizadas</th>
+            <th>Contactos efectivos</th>
+            <th>Ratio contacto</th>
+            <th>Transferido</th>
+            <th>Vendido (aprobado)</th>
+          </tr>
+        </thead>
+        <tbody id="tablaAgentesBody"></tbody>
+      </table>
+    </div>
+
+  </main>
 </div>
 
 <script>
 (function() {
-  // Registrar plugin de datalabels si está disponible
-  if (typeof ChartDataLabels !== 'undefined') {
-    Chart.register(ChartDataLabels);
-  }
-  
-  const greyPalette = ['#6B4E71', '#2C5F8A', '#489B9C', '#D9933B', '#A23B72', '#5E7B52', '#C2571A', '#6B4E71'];
-  
-  const datalabelsConfigGrey = {
-    color: '#f0f4fa',
-    backgroundColor: 'rgba(20,20,30,0.85)',
-    borderRadius: 10,
+  if (typeof ChartDataLabels !== 'undefined') Chart.register(ChartDataLabels);
+
+  const palette = ['#1a56db','#7c3aed','#059669','#d97706','#db2777','#0891b2','#ea580c','#4f46e5'];
+
+  const datalabelsCfg = {
+    color: '#fff',
+    backgroundColor: 'rgba(15,20,35,0.75)',
+    borderRadius: 8,
     padding: { left: 5, right: 5, top: 2, bottom: 2 },
     font: { weight: 'bold', size: 9 },
     formatter: (value, ctx) => {
-      if (!ctx.dataset.data || !ctx.dataset.data.length) return '';
+      if (!ctx.dataset.data) return '';
       let total = ctx.dataset.data.reduce((a,b)=>a+b,0);
-      if (total === 0) return '0%';
-      let pct = (value/total*100).toFixed(1);
-      return `${pct}%`;
+      if (total === 0) return '';
+      return `${(value/total*100).toFixed(1)}%`;
     }
   };
 
-  // --- DATOS CORREGIDOS ---
-  
-  // Datos del embudo (basados en los datos reales del sistema)
-  const EMBUDO = {
-    llamadasTotales: 3048,
-    contactables: 918,  // Contactos efectivos totales
-    transferidas: 10,
-    ventasCerradas: 1
-  };
-  
-  // Datos de performance por agente (datos reales)
+  const EMBUDO = { llamadasTotales: 3048, contactables: 918, transferidas: 10, ventasCerradas: 1 };
   const AGENTES = [
-    { nombre: "Paula", llamadas: 365, contactos: 283, vendido: 520000, transferido:  520000},
+    { nombre: "Paula", llamadas: 365, contactos: 283, vendido: 520000, transferido: 520000 },
     { nombre: "Jesus", llamadas: 553, contactos: 353, vendido: 0, transferido: 80000 }
   ];
 
-  // Totales calculados
-  const totalLlamadas = AGENTES.reduce((s,a)=> s + a.llamadas, 0);
-  const totalContactos = AGENTES.reduce((s,a)=> s + a.contactos, 0);
-  const ratioGlobal = totalLlamadas > 0 ? ((totalContactos / totalLlamadas) * 100).toFixed(1) : 0;
-  
-  // Ventas manuales
-  const ventasManual = { DIMEX: 0, MULTIVA: 520000, PYMIO: 0 };
-  const totalVendido = ventasManual.DIMEX + ventasManual.MULTIVA + ventasManual.PYMIO;
-  const totalTransferido = AGENTES.reduce((s,a)=> s + a.transferido, 0);
+  const totalLlamadas  = AGENTES.reduce((s,a)=>s+a.llamadas,0);
+  const totalContactos = AGENTES.reduce((s,a)=>s+a.contactos,0);
+  const ratioGlobal    = totalLlamadas > 0 ? ((totalContactos/totalLlamadas)*100).toFixed(1) : 0;
+  const ventasManual   = { DIMEX:0, MULTIVA:520000, PYMIO:0 };
+  const totalVendido   = ventasManual.DIMEX + ventasManual.MULTIVA + ventasManual.PYMIO;
+  const totalTransferido = AGENTES.reduce((s,a)=>s+a.transferido,0);
 
-  // Actualizar KPIs
-  document.getElementById('totalLlamadasDisplay').innerText = totalLlamadas.toLocaleString();
-  document.getElementById('kpiRatio').innerText = `${ratioGlobal}%`;
   document.getElementById('ratioMediaEquipo').innerText = `${ratioGlobal}%`;
-  document.getElementById('llamadasTotalBadge').innerHTML = `Total Llamadas: ${totalLlamadas}`;
-  document.getElementById('totalTransferBadge').innerHTML = `Total transferido: $${totalTransferido.toLocaleString('es-MX')}`;
-  document.getElementById('ventasTotalBadge').innerHTML = `Ventas totales: $${totalVendido.toLocaleString('es-MX')}`;
+  document.getElementById('llamadasTotalBadge').innerText = `Total: ${totalLlamadas.toLocaleString()}`;
+  document.getElementById('totalTransferBadge').innerText = `Total: $${totalTransferido.toLocaleString('es-MX')}`;
+  document.getElementById('ventasTotalBadge').innerText   = `Ventas: $${totalVendido.toLocaleString('es-MX')}`;
 
-  // Datos tipificacion
-  const tipiData = [235, 173, 59, 46, 43, 37, 27];
-  const tipiLabels = ['Se corta llamada (235)','No le interesa (173)', 'Poca disposición (59)','No se encuentra (46)','No tiene en que utilizarlo (43)','Cliente cuelga (37)',  'Tel equivocado (27)' ];
-  const tipiTotal = tipiData.reduce((a,b)=>a+b,0);
-  const tipiCtx = document.getElementById('multivaTipiChart')?.getContext('2d');
-  if (tipiCtx) {
-    new Chart(tipiCtx, {
-      type: 'bar', 
-      data: { labels: tipiLabels, datasets: [{ label: 'Registros', data: tipiData, backgroundColor: greyPalette.slice(0,7), borderRadius: 6 }] },
-      options: { 
-        responsive: true, 
-        maintainAspectRatio: false, 
-        plugins: { 
-          legend: { display: false }, 
-          datalabels: { formatter: (value) => { let pct = ((value / tipiTotal) * 100).toFixed(1); return `${pct}%`; }, ...datalabelsConfigGrey } 
-        }, 
-        scales: { 
-          x: { ticks: { color: '#080809', font: { size: 8, weight: '500' }, maxRotation: 35, minRotation: 30 }, grid: { color: 'rgba(255,255,255,0.04)' } }, 
-          y: { ticks: { color: '#080809' }, grid: { color: '#c0c0c6' } } 
-        } 
-      }
-    });
-    document.getElementById('tipiTotalBadge').innerText = `Total: ${tipiTotal}`;
-  }
-
-  // Embudo de conversión
+  // ── FUNNEL ──
   const funnelData = [
-    { name: "📞 Llamadas Totales", value: EMBUDO.llamadasTotales, prefix: "", color: "#5a5a5a" },
-    { name: "✅ Contactables", value: EMBUDO.contactables, prefix: "", color: "#4a4a4a" },
-    { name: "🔄 Transferidas", value: EMBUDO.transferidas, prefix: "", color: "#6c6c6c" },
-    { name: "💰 Ventas Cerradas", value: EMBUDO.ventasCerradas, prefix: "", color: "#3d3d3d" }
+    { name:"📞 Llamadas Totales", value: EMBUDO.llamadasTotales, color:"#1a56db" },
+    { name:"✅ Contactables",     value: EMBUDO.contactables,    color:"#7c3aed" },
+    { name:"🔄 Transferidas",     value: EMBUDO.transferidas,    color:"#059669" },
+    { name:"💰 Ventas Cerradas",  value: EMBUDO.ventasCerradas,  color:"#d97706" }
   ];
   const maxVal = funnelData[0].value;
   const funnelRoot = document.getElementById('funnelRoot');
   if (funnelRoot) {
     funnelRoot.innerHTML = '';
     funnelData.forEach((stage, idx) => {
-      const widthPercent = maxVal > 0 ? (stage.value / maxVal) * 100 : 0;
-      const convPercent = idx === 0 ? 100 : ((stage.value / funnelData[0].value) * 100).toFixed(1);
-      const container = document.createElement('div'); 
-      container.className = 'funnel-stage-item';
-      const bar = document.createElement('div'); 
-      bar.className = 'funnel-shape';
-      bar.style.width = `${Math.max(widthPercent, 15)}%`; // mínimo 15% para visibilidad
-      bar.style.background = `linear-gradient(95deg, #2C5F8A, #6B4E71)`;
-      bar.innerHTML = `<span class="funnel-label-text">${stage.name}</span><span class="funnel-value-number">${stage.prefix}${stage.value.toLocaleString()}</span><span class="funnel-percent">⬇ ${convPercent}%</span>`;
-      container.appendChild(bar);
-      if (idx < funnelData.length - 1) { 
-        const conn = document.createElement('div'); 
-        conn.className = 'connector-line'; 
-        container.appendChild(conn); 
+      const widthPct = maxVal > 0 ? Math.max((stage.value/maxVal)*100, 15) : 15;
+      const convPct  = idx === 0 ? '100' : ((stage.value/funnelData[0].value)*100).toFixed(1);
+      const wrap = document.createElement('div'); wrap.className = 'funnel-stage';
+      const bar  = document.createElement('div'); bar.className  = 'funnel-bar';
+      bar.style.cssText = `width:${widthPct}%;background:${stage.color};`;
+      bar.innerHTML = `<span class="funnel-stage-name">${stage.name}</span><span class="funnel-stage-val">${stage.value.toLocaleString()}</span><span class="funnel-stage-pct">↓ ${convPct}%</span>`;
+      wrap.appendChild(bar);
+      if (idx < funnelData.length - 1) {
+        const conn = document.createElement('div'); conn.className = 'funnel-connector';
+        wrap.appendChild(conn);
       }
-      funnelRoot.appendChild(container);
+      funnelRoot.appendChild(wrap);
     });
   }
 
-  // Gestión datos
-  const gestionData = [0, 16, 3, 3, 12];
-  const gestionLabels = ['Aprobado (0)', 'Ya no contesta (16)', 'Atraso DIMEX (3)', 'En proceso (3)', 'Espera de respuesta (12)'];
-  const gestionTotal = gestionData.reduce((a,b)=>a+b,0);
+  // ── TIPIFICACIONES ──
+  const tipiData   = [235,173,59,46,43,37,27];
+  const tipiLabels = ['Corta llamada','No le interesa','Poca disposición','No se encuentra','No lo utilizaría','Cliente cuelga','Tel equivocado'];
+  const tipiTotal  = tipiData.reduce((a,b)=>a+b,0);
+  document.getElementById('tipiTotalBadge').innerText = `Total: ${tipiTotal}`;
+  const tipiCtx = document.getElementById('multivaTipiChart')?.getContext('2d');
+  if (tipiCtx) new Chart(tipiCtx, {
+    type: 'bar',
+    data: { labels: tipiLabels, datasets: [{ data: tipiData, backgroundColor: palette, borderRadius: 6 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, datalabels: { formatter:(v)=>{ let p=((v/tipiTotal)*100).toFixed(1); return `${p}%`; }, ...datalabelsCfg } },
+      scales: {
+        x: { ticks: { color:'#6b7280', font:{ size:8 }, maxRotation:35, minRotation:30 }, grid:{ display:false } },
+        y: { ticks: { color:'#6b7280' }, grid:{ color:'#f3f4f6' } }
+      }
+    }
+  });
+
+  // ── GESTION ──
+  const gestionData   = [0,16,3,3,12];
+  const gestionLabels = ['Aprobado (0)','Ya no contesta (16)','Atraso DIMEX (3)','En proceso (3)','Espera respuesta (12)'];
+  const gestionTotal  = gestionData.reduce((a,b)=>a+b,0);
+  document.getElementById('gestionTotalBadge').innerText = `Total: ${gestionTotal}`;
   const gestionCtx = document.getElementById('multivaGestionChart')?.getContext('2d');
-  if (gestionCtx) {
-    new Chart(gestionCtx, { 
-      type: 'doughnut', 
-      data: { labels: gestionLabels, datasets: [{ data: gestionData, backgroundColor: greyPalette.slice(0,8), borderWidth: 0 }] }, 
-      options: { 
-        responsive: true, 
-        maintainAspectRatio: false, 
-        plugins: { 
-          legend: { position: 'right', labels: { color: '#080809', boxWidth: 10, font: { size: 9 } } }, 
-          datalabels: { formatter: (value) => { let pct = ((value / gestionTotal) * 100).toFixed(1); return value > 0 ? `${pct}%` : ''; }, ...datalabelsConfigGrey } 
-        }, 
-        cutout: '60%' 
-      } 
-    });
-    document.getElementById('gestionTotalBadge').innerText = `Total: ${gestionTotal}`;
-  }
+  if (gestionCtx) new Chart(gestionCtx, {
+    type: 'doughnut',
+    data: { labels: gestionLabels, datasets: [{ data: gestionData, backgroundColor: palette, borderWidth:0 }] },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins: { legend:{ position:'right', labels:{ color:'#374151', boxWidth:10, font:{ size:9 } } }, datalabels:{ formatter:(v)=>{ let p=((v/gestionTotal)*100).toFixed(1); return v>0?`${p}%`:''; }, ...datalabelsCfg } },
+      cutout:'60%'
+    }
+  });
 
-  // Estatus DIMEX
-  const statusData = [0, 4, 1, 6];
-  const statusLabels = ['Aprobado (0)', 'Buró de Crédito (4)', 'Rechazado (1)',  'En seguimiento (6)',];
-  const statusTotal = statusData.reduce((a,b)=>a+b,0);
+  // ── ESTATUS DIMEX ──
+  const statusData   = [0,4,1,6];
+  const statusLabels = ['Aprobado (0)','Buró de Crédito (4)','Rechazado (1)','En seguimiento (6)'];
+  const statusTotal  = statusData.reduce((a,b)=>a+b,0);
+  document.getElementById('dimexStatusTotalBadge').innerText = `Total: ${statusTotal}`;
   const statusCtx = document.getElementById('abrilStatusChart')?.getContext('2d');
-  if (statusCtx) {
-    new Chart(statusCtx, { 
-      type: 'doughnut', 
-      data: { labels: statusLabels, datasets: [{ data: statusData, backgroundColor: greyPalette.slice(0,7), borderWidth: 0 }] }, 
-      options: { 
-        responsive: true, 
-        maintainAspectRatio: false, 
-        plugins: { 
-          legend: { position: 'right', labels: { color: '#080809', boxWidth: 10, font: { size: 9 } } }, 
-          datalabels: { formatter: (value) => { let pct = ((value / statusTotal) * 100).toFixed(1); return value > 0 ? `${pct}%` : ''; }, ...datalabelsConfigGrey } 
-        }, 
-        cutout: '60%' 
-      } 
-    });
-    document.getElementById('dimexStatusTotalBadge').innerText = `Total: ${statusTotal}`;
-  }
+  if (statusCtx) new Chart(statusCtx, {
+    type: 'doughnut',
+    data: { labels: statusLabels, datasets: [{ data: statusData, backgroundColor: palette.slice(0,4), borderWidth:0 }] },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins: { legend:{ position:'right', labels:{ color:'#374151', boxWidth:10, font:{ size:9 } } }, datalabels:{ formatter:(v)=>{ let p=((v/statusTotal)*100).toFixed(1); return v>0?`${p}%`:''; }, ...datalabelsCfg } },
+      cutout:'60%'
+    }
+  });
 
-  // Estatus Multiva
-  const pipeData = [1, 2, 12, 1];
-  const pipeLabels = ['Comprado (1)', 'En proceso (2)', 'En espera de respuesta (12)', 'En recuperación (1)'];
-  const pipeTotal = pipeData.reduce((a,b)=>a+b,0);
+  // ── ESTATUS MULTIVA ──
+  const pipeData   = [1,2,12,1];
+  const pipeLabels = ['Comprado (1)','En proceso (2)','En espera (12)','En recuperación (1)'];
+  const pipeTotal  = pipeData.reduce((a,b)=>a+b,0);
+  document.getElementById('multivaPipeTotalBadge').innerText = `Total: ${pipeTotal}`;
   const multivaPipeCtx = document.getElementById('multivaEstatusPipelineChart')?.getContext('2d');
-  if (multivaPipeCtx) {
-    new Chart(multivaPipeCtx, { 
-      type: 'doughnut', 
-      data: { labels: pipeLabels, datasets: [{ data: pipeData, backgroundColor: greyPalette.slice(0,5), borderWidth: 0 }] }, 
-      options: { 
-        responsive: true, 
-        maintainAspectRatio: false, 
-        plugins: { 
-          legend: { position: 'right', labels: { color: '#080809', boxWidth: 10, font: { size: 9 } } }, 
-          datalabels: { formatter: (value) => { let pct = ((value / pipeTotal) * 100).toFixed(1); return value > 0 ? `${pct}%` : ''; }, ...datalabelsConfigGrey } 
-        }, 
-        cutout: '60%' 
-      } 
-    });
-    document.getElementById('multivaPipeTotalBadge').innerText = `Total: ${pipeTotal}`;
-  }
+  if (multivaPipeCtx) new Chart(multivaPipeCtx, {
+    type: 'doughnut',
+    data: { labels: pipeLabels, datasets: [{ data: pipeData, backgroundColor: palette.slice(0,4), borderWidth:0 }] },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins: { legend:{ position:'right', labels:{ color:'#374151', boxWidth:10, font:{ size:9 } } }, datalabels:{ formatter:(v)=>{ let p=((v/pipeTotal)*100).toFixed(1); return v>0?`${p}%`:''; }, ...datalabelsCfg } },
+      cutout:'60%'
+    }
+  });
 
-  // Tabla de agentes
-  const tbody = document.getElementById('tablaAgentesBody');
-  function renderTabla() {
-    tbody.innerHTML = '';
-    AGENTES.forEach(ag => {
-      const ratio = ag.llamadas > 0 ? ((ag.contactos / ag.llamadas) * 100).toFixed(1) : '0.0';
-      const transferForm = `$${ag.transferido.toLocaleString('es-MX', { maximumFractionDigits: 0 })}`;
-      const vendidoForm = ag.vendido > 0 ? `$${ag.vendido.toLocaleString('es-MX', { maximumFractionDigits: 0 })}` : '$0';
-      tbody.insertAdjacentHTML('beforeend', 
-        `<tr>
-          <td><strong>${ag.nombre}</strong></td>
-          <td class="highlight-number">${ag.llamadas.toLocaleString()}</td>
-          <td class="highlight-number">${ag.contactos.toLocaleString()}</td>
-          <td>${ratio}%</td>
-          <td>${transferForm}</td>
-          <td>${vendidoForm}</td>
-        </tr>`
-      );
-    });
-  }
-  renderTabla();
-
-  // GRÁFICA DE LLAMADAS vs CONTACTOS
+  // ── LLAMADAS vs CONTACTOS ──
   const ctxLlamadas = document.getElementById('agentesLlamadasChart')?.getContext('2d');
-  if (ctxLlamadas) {
-    new Chart(ctxLlamadas, {
-      type: 'bar',
-      data: { 
-        labels: AGENTES.map(a => a.nombre), 
-        datasets: [
-          { label: 'Llamadas realizadas', data: AGENTES.map(a => a.llamadas), backgroundColor: '#2C5F8A', borderRadius: 6 },
-          { label: 'Contactos efectivos', data: AGENTES.map(a => a.contactos), backgroundColor: '#6B4E71', borderRadius: 6 }
-        ] 
-      },
-      options: { 
-        responsive: true, 
-        maintainAspectRatio: false,
-        layout: { padding: { bottom: 20, left: 10, right: 10, top: 10 } },
-        plugins: { 
-          legend: { labels: { color: '#080809', font: { size: 10 } }, position: 'top' },
-          tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toLocaleString()}` } },
-          datalabels: { color: 'white', backgroundColor: 'rgba(30,30,40,0.7)', borderRadius: 8, formatter: (ctx) => ctx.toLocaleString(), font: { size: 10, weight: 'bold' } }
-        }, 
-        scales: { 
-          y: { ticks: { color: '#080809' }, grid: { color: '#c0c0c6' } }, 
-          x: { ticks: { color: '#080809', font: { size: 12, weight: '600' }, autoSkip: false }, grid: { display: false } } 
-        } 
-      }
-    });
-  }
+  if (ctxLlamadas) new Chart(ctxLlamadas, {
+    type: 'bar',
+    data: {
+      labels: AGENTES.map(a=>a.nombre),
+      datasets: [
+        { label:'Llamadas realizadas', data:AGENTES.map(a=>a.llamadas), backgroundColor:'#1a56db', borderRadius:6 },
+        { label:'Contactos efectivos',  data:AGENTES.map(a=>a.contactos), backgroundColor:'#7c3aed', borderRadius:6 }
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins: { legend:{ labels:{ color:'#374151', font:{ size:10 } }, position:'top' }, datalabels:{ color:'white', backgroundColor:'rgba(15,20,35,0.7)', borderRadius:8, formatter:(v)=>v.toLocaleString(), font:{ size:10, weight:'bold' } } },
+      scales: { y:{ ticks:{ color:'#6b7280' }, grid:{ color:'#f3f4f6' } }, x:{ ticks:{ color:'#374151', font:{ size:12, weight:'600' } }, grid:{ display:false } } }
+    }
+  });
 
-  // Gráfica Ratio Contacto
-  const ratios = AGENTES.map(a => a.llamadas > 0 ? parseFloat(((a.contactos / a.llamadas) * 100).toFixed(1)) : 0);
+  // ── RATIO CONTACTO ──
+  const ratios   = AGENTES.map(a=>a.llamadas>0?parseFloat(((a.contactos/a.llamadas)*100).toFixed(1)):0);
   const ctxRatio = document.getElementById('ratioContactoChart')?.getContext('2d');
-  if (ctxRatio) {
-    new Chart(ctxRatio, {
-      type: 'bar',
-      data: { labels: AGENTES.map(a => a.nombre), datasets: [{ label: 'Ratio Contacto (%)', data: ratios, backgroundColor: '#6B4E71', borderRadius: 8 }] },
-      options: { 
-        responsive: true, 
-        maintainAspectRatio: false,
-        layout: { padding: { bottom: 20 } },
-        plugins: { 
-          datalabels: { color: 'white', backgroundColor: 'rgba(30,30,40,0.7)', borderRadius: 8, formatter: (val) => `${val}%`, font: { size: 10, weight: 'bold' } },
-          legend: { labels: { color: '#080809' } } 
-        }, 
-        scales: { 
-          y: { title: { display: true, text: '% Contacto', color: '#9ca3af' }, ticks: { color: '#080809' }, grid: { color: '#c0c0c6' } }, 
-          x: { ticks: { color: '#080809', font: { size: 12, weight: '600' }, autoSkip: false }, grid: { display: false } } 
-        } 
-      }
-    });
-  }
+  if (ctxRatio) new Chart(ctxRatio, {
+    type: 'bar',
+    data: { labels:AGENTES.map(a=>a.nombre), datasets:[{ label:'Ratio Contacto (%)', data:ratios, backgroundColor:'#7c3aed', borderRadius:8 }] },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins: { datalabels:{ color:'white', backgroundColor:'rgba(15,20,35,0.7)', borderRadius:8, formatter:(v)=>`${v}%`, font:{ size:10, weight:'bold' } }, legend:{ labels:{ color:'#374151' } } },
+      scales: { y:{ title:{ display:true, text:'% Contacto', color:'#9ca3af' }, ticks:{ color:'#6b7280' }, grid:{ color:'#f3f4f6' } }, x:{ ticks:{ color:'#374151', font:{ size:12, weight:'600' } }, grid:{ display:false } } }
+    }
+  });
 
-  // Gráfica Monto Transferido
+  // ── MONTO TRANSFERIDO ──
   const ctxTransfer = document.getElementById('transferidoAgenteChart')?.getContext('2d');
-  if (ctxTransfer) {
-    new Chart(ctxTransfer, {
-      type: 'bar',
-      data: { labels: AGENTES.map(a => a.nombre), datasets: [{ label: 'Transferido ($)', data: AGENTES.map(a => a.transferido), backgroundColor: '#5E7B52', borderRadius: 8 }] },
-      options: { 
-        responsive: true, 
-        maintainAspectRatio: false,
-        layout: { padding: { bottom: 20, left: 10, right: 10 } },
-        plugins: { 
-          tooltip: { callbacks: { label: (ctx) => `$${ctx.raw.toLocaleString('es-MX', { maximumFractionDigits: 0 })}` } }, 
-          datalabels: { 
-            formatter: (val) => val > 0 ? `$${(val / 1000).toFixed(0)}K` : '', 
-            font: { size: 9, weight: 'bold' }, 
-            color: '#f1f5f9', 
-            backgroundColor: '#1f2937' 
-          },
-          legend: { labels: { color: '#080809' } }
-        }, 
-        scales: { 
-          y: { ticks: { callback: (val) => `$${(val / 1000).toFixed(0)}K`, color: '#080809' }, grid: { color: '#c0c0c6' } }, 
-          x: { ticks: { color: '#080809', font: { size: 12, weight: '600' }, autoSkip: false }, grid: { display: false } } 
-        } 
-      }
-    });
-  }
+  if (ctxTransfer) new Chart(ctxTransfer, {
+    type: 'bar',
+    data: { labels:AGENTES.map(a=>a.nombre), datasets:[{ label:'Transferido ($)', data:AGENTES.map(a=>a.transferido), backgroundColor:'#059669', borderRadius:8 }] },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins: { tooltip:{ callbacks:{ label:(ctx)=>`$${ctx.raw.toLocaleString('es-MX',{maximumFractionDigits:0})}` } }, datalabels:{ formatter:(v)=>v>0?`$${(v/1000).toFixed(0)}K`:'', font:{ size:9, weight:'bold' }, color:'#fff', backgroundColor:'#1f2937' }, legend:{ labels:{ color:'#374151' } } },
+      scales: { y:{ ticks:{ callback:(v)=>`$${(v/1000).toFixed(0)}K`, color:'#6b7280' }, grid:{ color:'#f3f4f6' } }, x:{ ticks:{ color:'#374151', font:{ size:12, weight:'600' } }, grid:{ display:false } } }
+    }
+  });
 
-  // Gráfica Distribución Ventas
+  // ── DISTRIBUCIÓN VENTAS ──
   const ctxVentas = document.getElementById('ventasProductoChart')?.getContext('2d');
-  if (ctxVentas) {
-    new Chart(ctxVentas, {
-      type: 'doughnut',
-      data: { 
-        labels: ['DIMEX (Aprobado)', 'Multiva Comprado', 'PYMIO'], 
-        datasets: [{ data: [ventasManual.DIMEX, ventasManual.MULTIVA, ventasManual.PYMIO], backgroundColor: greyPalette.slice(0,3), borderWidth: 0 }] 
-      },
-      options: { 
-        responsive: true, 
-        maintainAspectRatio: false, 
-        plugins: { 
-          legend: { position: 'right', labels: { color: '#080809', font: { size: 10 } } }, 
-          datalabels: { 
-            formatter: (val, ctx) => { 
-              if(val === 0) return ''; 
-              let total = ctx.dataset.data.reduce((a,b)=>a+b,0); 
-              let pct = ((val/total)*100).toFixed(0); 
-              return `${pct}%`; 
-            }, 
-            ...datalabelsConfigGrey 
-          } 
-        }, 
-        cutout: '60%' 
-      }
-    });
-  }
+  if (ctxVentas) new Chart(ctxVentas, {
+    type: 'doughnut',
+    data: { labels:['DIMEX (Aprobado)','Multiva Comprado','PYMIO'], datasets:[{ data:[ventasManual.DIMEX,ventasManual.MULTIVA,ventasManual.PYMIO], backgroundColor:palette.slice(0,3), borderWidth:0 }] },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins: { legend:{ position:'right', labels:{ color:'#374151', font:{ size:10 } } }, datalabels:{ formatter:(v,ctx)=>{ if(v===0)return''; let t=ctx.dataset.data.reduce((a,b)=>a+b,0); return `${((v/t)*100).toFixed(0)}%`; }, ...datalabelsCfg } },
+      cutout:'60%'
+    }
+  });
 
-  // Progreso metas
-  function updateProgress(fillId, percentId, value, meta) {
+  // ── PROGRESS BARS ──
+  function updateProgress(fillId, pctId, value, meta) {
     const fill = document.getElementById(fillId);
-    const percentSpan = document.getElementById(percentId);
-    if (fill && percentSpan) {
-      let rawPercent = (value / meta) * 100;
-      let width = Math.min(rawPercent, 100);
-      fill.style.width = width + '%';
-      percentSpan.innerText = `${rawPercent.toFixed(1)}%`;
+    const pct  = document.getElementById(pctId);
+    if (fill && pct) {
+      let raw = (value/meta)*100;
+      fill.style.width = Math.min(raw,100)+'%';
+      pct.innerText = `${raw.toFixed(1)}%`;
     }
   }
-  
-  updateProgress('dimexCompradoFill', 'dimexCompradoPercent', 0, 600000);
-  updateProgress('dimexTransferFill', 'dimexTransferPercent', 165000, 1200000);
+  updateProgress('dimexCompradoFill',   'dimexCompradoPercent',   0,      600000);
+  updateProgress('dimexTransferFill',   'dimexTransferPercent',   165000, 1200000);
   updateProgress('multivaCompradoFill', 'multivaCompradoPercent', 520000, 1550000);
   updateProgress('multivaTransferFill', 'multivaTransferPercent', 640000, 3100000);
+
+  // ── TABLA AGENTES ──
+  const tbody = document.getElementById('tablaAgentesBody');
+  AGENTES.forEach(ag => {
+    const ratio     = ag.llamadas > 0 ? ((ag.contactos/ag.llamadas)*100).toFixed(1) : '0.0';
+    const initials  = ag.nombre.charAt(0).toUpperCase();
+    tbody.insertAdjacentHTML('beforeend', `
+      <tr>
+        <td><div class="agent-name"><div class="agent-avatar">${initials}</div>${ag.nombre}</div></td>
+        <td class="cell-num">${ag.llamadas.toLocaleString()}</td>
+        <td class="cell-num">${ag.contactos.toLocaleString()}</td>
+        <td>${ratio}%</td>
+        <td class="cell-num">$${ag.transferido.toLocaleString('es-MX',{maximumFractionDigits:0})}</td>
+        <td class="cell-num">${ag.vendido>0?'$'+ag.vendido.toLocaleString('es-MX',{maximumFractionDigits:0}):'$0'}</td>
+      </tr>
+    `);
+  });
+
 })();
 </script>
 </body>
