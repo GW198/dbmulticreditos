@@ -469,7 +469,7 @@
   });
   
   new Chart(document.getElementById('ventasProductoChart'), {
-    type:'doughnut', data:{ labels:['DIMEX Vendido','Multiva Vendido'], datasets:[{ data:[0, 520000], backgroundColor:['#1a56db','#7c3aed'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['DIMEX Vendido','Multiva Vendido'], datasets:[{ data:[103331.85, 530000], backgroundColor:['#1a56db','#7c3aed'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:10 } } }, datalabels:{ formatter:(v,ctx)=> v>0 ? `${((v/520000)*100).toFixed(0)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
