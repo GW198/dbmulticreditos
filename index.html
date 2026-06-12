@@ -373,8 +373,8 @@
   
   // ========== DATOS Y GRÁFICOS ==========
   const AGENTES = [
-    { nombre: "Paula", llamadas: 365, contactos: 283, vendido: 520000, transferido: 520000 },
-    { nombre: "Jesus", llamadas: 553, contactos: 353, vendido: 0, transferido: 80000 }
+    { nombre: "Paula", llamadas: 1152, contactos: 803, vendido: 520000, transferido: 520000 },
+    { nombre: "Jesus", llamadas: 2501, contactos: 1086, vendido: 0, transferido: 80000 }
   ];
   const totalLlamadas = AGENTES.reduce((s,a)=>s+a.llamadas,0);
   const totalContactos = AGENTES.reduce((s,a)=>s+a.contactos,0);
@@ -414,7 +414,7 @@
   }
   
   // Tipificaciones
-  const tipiData = [235,173,59,46,43,37,27];
+  const tipiData = [638,544,210,146,148,109,96];
   const tipiTotal = tipiData.reduce((a,b)=>a+b,0);
   document.getElementById('tipiTotalBadge').innerText = `Total: ${tipiTotal}`;
   new Chart(document.getElementById('multivaTipiChart'), {
