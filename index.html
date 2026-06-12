@@ -199,8 +199,8 @@
     .funnel-stage-pct { font-size: 0.7rem; font-weight: 600; background: rgba(0,0,0,0.25); color: #fff; padding: 2px 8px; border-radius: 20px; }
     .funnel-connector { width: 2px; height: 18px; background: var(--gray-300); margin: 4px auto; }
     
-    /* Tabla */
-    .table-wrap { background: white; border-radius: var(--radius-lg); padding: 20px; overflow-x: auto; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-100); }
+    /* Tablas */
+    .table-wrap { background: white; border-radius: var(--radius-lg); padding: 20px; overflow-x: auto; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-100); margin-bottom: 20px; }
     .dash-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
     .dash-table th { text-align: left; padding: 12px 12px 12px 0; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--ink-light); border-bottom: 1px solid var(--gray-100); }
     .dash-table td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--gray-50); color: var(--ink-mid); }
@@ -222,7 +222,6 @@
     <div class="nav-item" data-section="estatus-section"><i class="fas fa-chart-pie"></i> Estatus Productos</div>
     <div class="nav-item" data-section="agentes-section"><i class="fas fa-users"></i> Rendimiento Agentes</div>
     <div class="nav-item" data-section="tabla-section"><i class="fas fa-table-list"></i> Performance Detallado</div>
-   
   </aside>
 
   <main class="main" id="mainContent">
@@ -230,7 +229,6 @@
     <div id="kpi-section" class="dashboard-section">
       <div class="topbar">
         <div class="topbar-left"><div class="topbar-eyebrow">Reporte mensual</div><div class="topbar-title">Junio 2026</div></div>
-       
       </div>
       <div class="kpi-grid">
         <div class="kpi-card" data-color="blue"><div class="kpi-top"><div class="kpi-icon blue"><i class="fas fa-phone-volume"></i></div><div class="kpi-label-top">Llamadas realizadas</div></div><div class="kpi-value">8,280</div><div class="kpi-meta"></div></div>
@@ -292,9 +290,21 @@
       </div>
     </div>
 
-    <!-- SECCIÓN 7: Tabla detallada -->
+      
+
+    <!-- SECCIÓN 7: Tabla detallada agentes -->
     <div id="tabla-section" class="dashboard-section">
       <div class="section-header"><div class="section-header-line"></div><div class="section-header-text">Agentes · Performance Detallado</div><div class="section-header-line"></div></div>
+      <div class="table-wrap">
+        <table class="dash-table">
+          <thead>
+            <tr><th>BASE</th><th>Llamadas</th><th>Abandono</th><th>% Abandono</th><th>Contacto</th><th>% De contacto</th><th>Contacto Efectivo</th><th>% Contacto Efectivo</th></tr>
+          </thead>
+          <tbody id="baseTelemarketingBody"></tbody>
+        </table>
+      </div>
+    </div>
+      
       <div class="table-wrap"><table class="dash-table"><thead><tr><th>Agente</th><th>Llamadas realizadas</th><th>Contactos efectivos</th><th>Ratio contacto</th><th>Transferido</th><th>Vendido (aprobado)</th></tr></thead><tbody id="tablaAgentesBody"></tbody></table></div>
     </div>
   </main>
@@ -304,7 +314,7 @@
 (function() {
   if (typeof ChartDataLabels !== 'undefined') Chart.register(ChartDataLabels);
   
-  // ========== SCROLLSPY: resaltado automático en sidebar ==========
+  // ========== SCROLLSPY actualizado con nueva sección base ==========
   const sections = [
     { id: 'kpi-section', selector: '[data-section="kpi-section"]' },
     { id: 'metas-section', selector: '[data-section="metas-section"]' },
@@ -312,13 +322,13 @@
     { id: 'tipificacion-section', selector: '[data-section="tipificacion-section"]' },
     { id: 'estatus-section', selector: '[data-section="estatus-section"]' },
     { id: 'agentes-section', selector: '[data-section="agentes-section"]' },
+    { id: 'base-table-section', selector: '[data-section="base-table-section"]' },
     { id: 'tabla-section', selector: '[data-section="tabla-section"]' }
   ];
   
   function updateActiveSection() {
     let current = null;
-    const scrollPos = window.scrollY + 100; // offset para detección temprana
-    
+    const scrollPos = window.scrollY + 100;
     for (let section of sections) {
       const element = document.getElementById(section.id);
       if (element) {
@@ -330,40 +340,30 @@
         }
       }
     }
-    
-    // Si no hay sección exacta, tomar la más cercana arriba
     if (!current) {
       for (let section of sections) {
         const element = document.getElementById(section.id);
-        if (element && element.offsetTop <= scrollPos) {
-          current = section;
-        }
+        if (element && element.offsetTop <= scrollPos) current = section;
       }
     }
-    
-    // Aplicar clase activa
     document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-    if (current) {
+    if (current && current.selector) {
       const activeNav = document.querySelector(current.selector);
       if (activeNav) activeNav.classList.add('active');
     } else {
-      // Fallback: primer item
       const firstNav = document.querySelector('.nav-item');
       if (firstNav) firstNav.classList.add('active');
     }
   }
   
-  // Click en sidebar para navegación suave
   document.querySelectorAll('.nav-item').forEach(item => {
     const sectionKey = item.getAttribute('data-section');
     if (sectionKey) {
       item.addEventListener('click', (e) => {
         e.preventDefault();
         const target = document.getElementById(sectionKey);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          setTimeout(updateActiveSection, 100);
-        }
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(updateActiveSection, 100);
       });
     }
   });
@@ -380,7 +380,7 @@
   const totalContactos = AGENTES.reduce((s,a)=>s+a.contactos,0);
   const ratioGlobal = totalLlamadas>0 ? ((totalContactos/totalLlamadas)*100).toFixed(1) : 0;
   const totalTransferido = AGENTES.reduce((s,a)=>s+a.transferido,0);
-  const ventasTotales = 520000; // Multiva vendido
+  const ventasTotales = 520000;
   
   document.getElementById('ratioMediaEquipo').innerText = `${ratioGlobal}%`;
   document.getElementById('llamadasTotalBadge').innerHTML = `Total: ${totalLlamadas.toLocaleString()}`;
@@ -413,13 +413,16 @@
     });
   }
   
+  // Configuración común para datalabels en blanco en TODOS los gráficos
+  const whiteLabelConfig = { color: '#ffffff', backgroundColor: 'rgba(0,0,0,0.65)', borderRadius: 6, padding: { left: 4, right: 4, top: 2, bottom: 2 }, font: { size: 10, weight: 'bold' } };
+  
   // Tipificaciones
   const tipiData = [638,544,210,146,148,109,96];
   const tipiTotal = tipiData.reduce((a,b)=>a+b,0);
   document.getElementById('tipiTotalBadge').innerText = `Total: ${tipiTotal}`;
   new Chart(document.getElementById('multivaTipiChart'), {
     type:'bar', data:{ labels:['Corta llamada','No le interesa','Poca disposición','No se encuentra','No lo utilizaría','Cliente cuelga','Tel equivocado'], datasets:[{ data:tipiData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706','#db2777','#0891b2','#ea580c'], borderRadius:6 }] },
-    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:false }, datalabels:{ formatter:(v)=>{ let p=((v/tipiTotal)*100).toFixed(1); return `${p}%`; }, color:'#fff', backgroundColor:'rgba(0,0,0,0.7)', borderRadius:6, font:{ size:9 } } }, scales:{ x:{ ticks:{ font:{ size:8 } } }, y:{ ticks:{ color:'#6b7280' } } } }
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:false }, datalabels:{ formatter:(v)=>{ let p=((v/tipiTotal)*100).toFixed(1); return `${p}%`; }, ...whiteLabelConfig } }, scales:{ x:{ ticks:{ font:{ size:8 } } }, y:{ ticks:{ color:'#6b7280' } } } }
   });
   
   // Gestión
@@ -427,8 +430,8 @@
   const gestionTotal = gestionData.reduce((a,b)=>a+b,0);
   document.getElementById('gestionTotalBadge').innerText = `Total: ${gestionTotal}`;
   new Chart(document.getElementById('multivaGestionChart'), {
-    type:'doughnut', data:{ labels:['Aprobado','Ya no contesta','Atraso DIMEX','Desconfianza','Sin convenio','En proceso','Espera respuesta','Sin capacidad'], datasets:[{ data:gestionData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706','#db2777'], borderWidth:0 }] },
-    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/gestionTotal)*100).toFixed(1)}%` : '' } }, cutout:'60%' }
+    type:'doughnut', data:{ labels:['Aprobado','Ya no contesta','Atraso DIMEX','Desconfianza','Sin convenio','En proceso','Espera respuesta','Sin capacidad'], datasets:[{ data:gestionData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706','#db2777','#0891b2','#f97316','#6b21a5'], borderWidth:0 }] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/gestionTotal)*100).toFixed(1)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
   // Estatus DIMEX
@@ -436,8 +439,8 @@
   const statusTotal = statusData.reduce((a,b)=>a+b,0);
   document.getElementById('dimexStatusTotalBadge').innerText = `Total: ${statusTotal}`;
   new Chart(document.getElementById('abrilStatusChart'), {
-    type:'doughnut', data:{ labels:['Aprobado','Buró Crédito','En seguimiento'], datasets:[{ data:statusData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706'], borderWidth:0 }] },
-    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/statusTotal)*100).toFixed(1)}%` : '' } }, cutout:'60%' }
+    type:'doughnut', data:{ labels:['Aprobado','Buró Crédito','En seguimiento'], datasets:[{ data:statusData, backgroundColor:['#1a56db','#7c3aed','#059669'], borderWidth:0 }] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/statusTotal)*100).toFixed(1)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
   // Estatus Multiva
@@ -446,28 +449,28 @@
   document.getElementById('multivaPipeTotalBadge').innerText = `Total: ${pipeTotal}`;
   new Chart(document.getElementById('multivaEstatusPipelineChart'), {
     type:'doughnut', data:{ labels:['Comprado','En proceso','Sin capacidad','En recuperación'], datasets:[{ data:pipeData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706'], borderWidth:0 }] },
-    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/pipeTotal)*100).toFixed(1)}%` : '' } }, cutout:'60%' }
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/pipeTotal)*100).toFixed(1)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
-  // Gráficos agentes
+  // Gráficos agentes (barras con labels en blanco)
   new Chart(document.getElementById('agentesLlamadasChart'), {
     type:'bar', data:{ labels:AGENTES.map(a=>a.nombre), datasets:[{ label:'Llamadas', data:AGENTES.map(a=>a.llamadas), backgroundColor:'#1a56db', borderRadius:6 },{ label:'Contactos', data:AGENTES.map(a=>a.contactos), backgroundColor:'#7c3aed', borderRadius:6 }] },
-    options:{ responsive:true, maintainAspectRatio:false, plugins:{ datalabels:{ formatter:(v)=>v.toLocaleString(), color:'#fff', backgroundColor:'rgba(0,0,0,0.6)', borderRadius:6, font:{ size:10 } } }, scales:{ y:{ ticks:{ color:'#6b7280' } } } }
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{ datalabels:{ formatter:(v)=>v.toLocaleString(), ...whiteLabelConfig } }, scales:{ y:{ ticks:{ color:'#6b7280' } } } }
   });
   
   new Chart(document.getElementById('ratioContactoChart'), {
     type:'bar', data:{ labels:AGENTES.map(a=>a.nombre), datasets:[{ label:'% Contacto', data:AGENTES.map(a=> a.llamadas>0 ? ((a.contactos/a.llamadas)*100).toFixed(1) : 0), backgroundColor:'#7c3aed', borderRadius:6 }] },
-    options:{ responsive:true, maintainAspectRatio:false, plugins:{ datalabels:{ formatter:(v)=>`${v}%`, color:'#fff', backgroundColor:'rgba(0,0,0,0.6)', borderRadius:6 } }, scales:{ y:{ title:{ display:true, text:'Porcentaje' }, ticks:{ color:'#6b7280' } } } }
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{ datalabels:{ formatter:(v)=>`${v}%`, ...whiteLabelConfig } }, scales:{ y:{ title:{ display:true, text:'Porcentaje' }, ticks:{ color:'#6b7280' } } } }
   });
   
   new Chart(document.getElementById('transferidoAgenteChart'), {
     type:'bar', data:{ labels:AGENTES.map(a=>a.nombre), datasets:[{ label:'Transferido ($)', data:AGENTES.map(a=>a.transferido), backgroundColor:'#059669', borderRadius:6 }] },
-    options:{ responsive:true, maintainAspectRatio:false, plugins:{ tooltip:{ callbacks:{ label:(ctx)=>`$${ctx.raw.toLocaleString('es-MX')}` } }, datalabels:{ formatter:(v)=> v>0 ? `$${(v/1000).toFixed(0)}K` : '', color:'#fff', backgroundColor:'#1f2937', borderRadius:6 } }, scales:{ y:{ ticks:{ callback:(v)=>`$${(v/1000).toFixed(0)}K` } } } }
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{ tooltip:{ callbacks:{ label:(ctx)=>`$${ctx.raw.toLocaleString('es-MX')}` } }, datalabels:{ formatter:(v)=> v>0 ? `$${(v/1000).toFixed(0)}K` : '', ...whiteLabelConfig } }, scales:{ y:{ ticks:{ callback:(v)=>`$${(v/1000).toFixed(0)}K` } } } }
   });
   
   new Chart(document.getElementById('ventasProductoChart'), {
     type:'doughnut', data:{ labels:['DIMEX Vendido','Multiva Vendido'], datasets:[{ data:[0, 520000], backgroundColor:['#1a56db','#7c3aed'], borderWidth:0 }] },
-    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:10 } } }, datalabels:{ formatter:(v,ctx)=> v>0 ? `${((v/520000)*100).toFixed(0)}%` : '' } }, cutout:'60%' }
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:10 } } }, datalabels:{ formatter:(v,ctx)=> v>0 ? `${((v/520000)*100).toFixed(0)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
   // Progress bars
@@ -497,6 +500,28 @@
         <td>${ratio}%</td>
         <td class="cell-num">$${ag.transferido.toLocaleString('es-MX')}</td>
         <td class="cell-num">${ag.vendido>0 ? '$'+ag.vendido.toLocaleString('es-MX') : '$0'}</td>
+      </tr>
+    `);
+  });
+  
+  // ========== NUEVA TABLA: Base Telemarketing ==========
+  const baseData = [
+    { name: "BBDD 28052026 - 202605281126", llamadas: 3629, abandono: 452, pctAbandono: 12, contacto: 1523, pctContacto: 42, contactoEfectivo: 917, pctContactoEfectivo: 60 },
+    { name: "BBDD 27052026 - 202605271329", llamadas: 2355, abandono: 53, pctAbandono: 2, contacto: 369, pctContacto: 16, contactoEfectivo: 131, pctContactoEfectivo: 36 },
+    { name: "bbdd especial 29052026 - 202605291227", llamadas: 1809, abandono: 73, pctAbandono: 4, contacto: 410, pctContacto: 23, contactoEfectivo: 175, pctContactoEfectivo: 43 }
+  ];
+  const baseTbody = document.getElementById('baseTelemarketingBody');
+  baseData.forEach(row => {
+    baseTbody.insertAdjacentHTML('beforeend', `
+      <tr>
+        <td class="cell-num">${row.name}</td>
+        <td class="cell-num">${row.llamadas.toLocaleString()}</td>
+        <td class="cell-num">${row.abandono.toLocaleString()}</td>
+        <td>${row.pctAbandono}%</td>
+        <td class="cell-num">${row.contacto.toLocaleString()}</td>
+        <td>${row.pctContacto}%</td>
+        <td class="cell-num">${row.contactoEfectivo.toLocaleString()}</td>
+        <td>${row.pctContactoEfectivo}%</td>
       </tr>
     `);
   });
