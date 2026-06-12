@@ -391,7 +391,7 @@
   const funnelData = [
     { name:"📞 Llamadas Totales", value:8280, color:"#1a56db" },
     { name:"✅ Contactables", value:2302, color:"#7c3aed" },
-    { name:"🔄 Transferidas", value:20, color:"#059669" },
+    { name:"🔄 Transferidas", value:21, color:"#059669" },
     { name:"💰 Ventas Cerradas", value:5, color:"#d97706" }
   ];
   const maxFunnel = funnelData[0].value;
@@ -444,7 +444,7 @@
   });
   
   // Estatus Multiva
-  const pipeData = [2,1,2,3];
+  const pipeData = [2,2,2,3];
   const pipeTotal = pipeData.reduce((a,b)=>a+b,0);
   document.getElementById('multivaPipeTotalBadge').innerText = `Total: ${pipeTotal}`;
   new Chart(document.getElementById('multivaEstatusPipelineChart'), {
