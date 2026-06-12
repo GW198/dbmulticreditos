@@ -391,8 +391,8 @@
   const funnelData = [
     { name:"📞 Llamadas Totales", value:8280, color:"#1a56db" },
     { name:"✅ Contactables", value:2302, color:"#7c3aed" },
-    { name:"🔄 Transferidas", value:10, color:"#059669" },
-    { name:"💰 Ventas Cerradas", value:1, color:"#d97706" }
+    { name:"🔄 Transferidas", value:20, color:"#059669" },
+    { name:"💰 Ventas Cerradas", value:5, color:"#d97706" }
   ];
   const maxFunnel = funnelData[0].value;
   const funnelRoot = document.getElementById('funnelRoot');
@@ -423,29 +423,29 @@
   });
   
   // Gestión
-  const gestionData = [0,16,3,3,12];
+  const gestionData = [0,81,7,4,17,7,9,1];
   const gestionTotal = gestionData.reduce((a,b)=>a+b,0);
   document.getElementById('gestionTotalBadge').innerText = `Total: ${gestionTotal}`;
   new Chart(document.getElementById('multivaGestionChart'), {
-    type:'doughnut', data:{ labels:['Aprobado','Ya no contesta','Atraso DIMEX','En proceso','Espera respuesta'], datasets:[{ data:gestionData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706','#db2777'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['Aprobado','Ya no contesta','Atraso DIMEX','Desconfianza','Sin convenio','En proceso','Espera respuesta','Sin capacidad'], datasets:[{ data:gestionData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706','#db2777'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/gestionTotal)*100).toFixed(1)}%` : '' } }, cutout:'60%' }
   });
   
   // Estatus DIMEX
-  const statusData = [0,4,1,6];
+  const statusData = [3,5,4];
   const statusTotal = statusData.reduce((a,b)=>a+b,0);
   document.getElementById('dimexStatusTotalBadge').innerText = `Total: ${statusTotal}`;
   new Chart(document.getElementById('abrilStatusChart'), {
-    type:'doughnut', data:{ labels:['Aprobado','Buró Crédito','Rechazado','En seguimiento'], datasets:[{ data:statusData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['Aprobado','Buró Crédito','En seguimiento'], datasets:[{ data:statusData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/statusTotal)*100).toFixed(1)}%` : '' } }, cutout:'60%' }
   });
   
   // Estatus Multiva
-  const pipeData = [1,2,12,1];
+  const pipeData = [2,1,2,3];
   const pipeTotal = pipeData.reduce((a,b)=>a+b,0);
   document.getElementById('multivaPipeTotalBadge').innerText = `Total: ${pipeTotal}`;
   new Chart(document.getElementById('multivaEstatusPipelineChart'), {
-    type:'doughnut', data:{ labels:['Comprado','En proceso','En espera','En recuperación'], datasets:[{ data:pipeData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['Comprado','En proceso','Sin capacidad','En recuperación'], datasets:[{ data:pipeData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/pipeTotal)*100).toFixed(1)}%` : '' } }, cutout:'60%' }
   });
   
