@@ -448,7 +448,7 @@
   const pipeTotal = pipeData.reduce((a,b)=>a+b,0);
   document.getElementById('multivaPipeTotalBadge').innerText = `Total: ${pipeTotal}`;
   new Chart(document.getElementById('multivaEstatusPipelineChart'), {
-    type:'doughnut', data:{ labels:['Comprado (2)','En proceso (2)','Sin capacidad (2)','En recuperación (3)'], datasets:[{ data:pipeData, backgroundColor:['#7c3aed','#1a56db','#059669','#d97706'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['Comprado (2)','En proceso (2)','Sin capacidad (2)','En recuperación (3)'], datasets:[{ data:pipeData, backgroundColor:['#059669','#1a56db','#7c3aed','#d97706'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/pipeTotal)*100).toFixed(1)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
