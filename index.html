@@ -232,8 +232,8 @@
       </div>
       <div class="kpi-grid">
         <div class="kpi-card" data-color="blue"><div class="kpi-top"><div class="kpi-icon blue"><i class="fas fa-phone-volume"></i></div><div class="kpi-label-top">Llamadas realizadas</div></div><div class="kpi-value">8,280</div><div class="kpi-meta"></div></div>
-        <div class="kpi-card" data-color="purple"><div class="kpi-top"><div class="kpi-icon purple"><i class="fas fa-chart-simple"></i></div><div class="kpi-label-top">Vendido DIMEX ✅</div></div><div class="kpi-value">$0</div><div class="kpi-meta"></div></div>
-        <div class="kpi-card" data-color="orange"><div class="kpi-top"><div class="kpi-icon orange"><i class="fas fa-chart-line"></i></div><div class="kpi-label-top">Vendido MULTIVA 💰</div></div><div class="kpi-value">$520,000</div><div class="kpi-meta"></div></div>
+        <div class="kpi-card" data-color="purple"><div class="kpi-top"><div class="kpi-icon purple"><i class="fas fa-chart-simple"></i></div><div class="kpi-label-top">Vendido DIMEX ✅</div></div><div class="kpi-value">$103,331.85</div><div class="kpi-meta"></div></div>
+        <div class="kpi-card" data-color="orange"><div class="kpi-top"><div class="kpi-icon orange"><i class="fas fa-chart-line"></i></div><div class="kpi-label-top">Vendido MULTIVA 💰</div></div><div class="kpi-value">$530,000</div><div class="kpi-meta"></div></div>
         <div class="kpi-card" data-color="green"><div class="kpi-top"><div class="kpi-icon green"><i class="fas fa-percent"></i></div><div class="kpi-label-top">Contactabilidad</div></div><div class="kpi-value">27.80%</div><div class="kpi-meta"></div></div>
       </div>
     </div>
@@ -380,7 +380,7 @@
   const totalContactos = AGENTES.reduce((s,a)=>s+a.contactos,0);
   const ratioGlobal = totalLlamadas>0 ? ((totalContactos/totalLlamadas)*100).toFixed(1) : 0;
   const totalTransferido = AGENTES.reduce((s,a)=>s+a.transferido,0);
-  const ventasTotales = 520000;
+  const ventasTotales = 633331.85;
   
   document.getElementById('ratioMediaEquipo').innerText = `${ratioGlobal}%`;
   document.getElementById('llamadasTotalBadge').innerHTML = `Total: ${totalLlamadas.toLocaleString()}`;
@@ -483,7 +483,7 @@
       pct.innerText = `${percent.toFixed(1)}%`;
     }
   };
-  updateProgress('dimexCompradoFill','dimexCompradoPercent',13331.85,600000);
+  updateProgress('dimexCompradoFill','dimexCompradoPercent',103331.85,600000);
   updateProgress('dimexTransferFill','dimexTransferPercent',350664.59,1200000);
   updateProgress('multivaCompradoFill','multivaCompradoPercent',530000,1550000);
   updateProgress('multivaTransferFill','multivaTransferPercent',846200,3000000);
