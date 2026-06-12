@@ -430,7 +430,7 @@
   const gestionTotal = gestionData.reduce((a,b)=>a+b,0);
   document.getElementById('gestionTotalBadge').innerText = `Total: ${gestionTotal}`;
   new Chart(document.getElementById('multivaGestionChart'), {
-    type:'doughnut', data:{ labels:['Aprobado','Ya no contesta','Atraso DIMEX','Desconfianza','Sin convenio','En proceso','Espera respuesta','Sin capacidad'], datasets:[{ data:gestionData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706','#db2777','#0891b2','#f97316','#6b21a5'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['Aprobado (0)','Ya no contesta (81)','Atraso DIMEX (7)','Desconfianza (4)','Sin convenio (17)','En proceso (7)','Espera respuesta (9)','Sin capacidad (1)'], datasets:[{ data:gestionData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706','#db2777','#0891b2','#f97316','#6b21a5'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/gestionTotal)*100).toFixed(1)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
@@ -439,7 +439,7 @@
   const statusTotal = statusData.reduce((a,b)=>a+b,0);
   document.getElementById('dimexStatusTotalBadge').innerText = `Total: ${statusTotal}`;
   new Chart(document.getElementById('abrilStatusChart'), {
-    type:'doughnut', data:{ labels:['Aprobado','Buró Crédito','En seguimiento'], datasets:[{ data:statusData, backgroundColor:['#1a56db','#7c3aed','#059669'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['Aprobado (3)','Buró Crédito (5)','En seguimiento (4)'], datasets:[{ data:statusData, backgroundColor:['#1a56db','#7c3aed','#059669'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/statusTotal)*100).toFixed(1)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
@@ -448,7 +448,7 @@
   const pipeTotal = pipeData.reduce((a,b)=>a+b,0);
   document.getElementById('multivaPipeTotalBadge').innerText = `Total: ${pipeTotal}`;
   new Chart(document.getElementById('multivaEstatusPipelineChart'), {
-    type:'doughnut', data:{ labels:['Comprado','En proceso','Sin capacidad','En recuperación'], datasets:[{ data:pipeData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['Comprado (2)','En proceso (2)','Sin capacidad (2)','En recuperación (3)'], datasets:[{ data:pipeData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/pipeTotal)*100).toFixed(1)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
