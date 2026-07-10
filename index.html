@@ -725,8 +725,8 @@
   const funnelData = [
     { name:"📞 Llamadas Totales", value:33796, color:"#1a56db" },
     { name:"✅ Contactables", value:10178, color:"#7c3aed" },
-    { name:"🔄 Transferidas", value:54, color:"#059669" },
-    { name:"💰 Ventas Cerradas", value:12, color:"#d97706" }
+    { name:"🔄 Transferidas", value:42, color:"#059669" },
+    { name:"💰 Ventas Cerradas", value:0, color:"#d97706" }
   ];
   const maxFunnel = funnelData[0].value;
   const funnelRoot = document.getElementById('funnelRoot');
@@ -751,11 +751,11 @@
   const whiteLabelConfig = { color: '#ffffff', backgroundColor: 'rgba(0,0,0,0.65)', borderRadius: 6, padding: { left: 4, right: 4, top: 2, bottom: 2 }, font: { size: 10, weight: 'bold' } };
   
   // Tipificaciones
-  const tipiData = [2841,1712,1068,367,231];
+  const tipiData = [3554,2256,1724,1079,761];
   const tipiTotal = tipiData.reduce((a,b)=>a+b,0);
   document.getElementById('tipiTotalBadge').innerText = `Total: ${tipiTotal}`;
   new Chart(document.getElementById('multivaTipiChart'), {
-    type:'bar', data:{ labels:['Corta llamada','No le interesa','Cliente cuelga','Poca disposición','No lo utilizaría'], datasets:[{ data:tipiData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706','#db2777','#0891b2','#ea580c'], borderRadius:6 }] },
+    type:'bar', data:{ labels:['Corta llamada','No le interesa','Cliente cuelga','No se encuentra','Equivocado'], datasets:[{ data:tipiData, backgroundColor:['#1a56db','#7c3aed','#059669','#d97706','#db2777','#0891b2','#ea580c'], borderRadius:6 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:false }, datalabels:{ formatter:(v)=>{ let p=((v/tipiTotal)*100).toFixed(1); return `${p}%`; }, ...whiteLabelConfig } }, scales:{ x:{ ticks:{ font:{ size:8 } } }, y:{ ticks:{ color:'#6b7280' } } } }
   });
   
