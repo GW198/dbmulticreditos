@@ -769,29 +769,29 @@
   });
 
   // Estatus DIMEX
-  const dimexStatusData = [7,9,18,2];
+  const dimexStatusData = [0,6,8,1];
   const dimexStatusTotal = dimexStatusData.reduce((a,b)=>a+b,0);
   document.getElementById('dimexStatusTotalBadge').innerText = `Total: ${dimexStatusTotal}`;
   new Chart(document.getElementById('dimexStatusChart'), {
-    type:'doughnut', data:{ labels:['Aprobado (7)','Buró Crédito (9)','En seguimiento (18)','Sin capacidad (2)'], datasets:[{ data:dimexStatusData, backgroundColor:['#059669','#7c3aed','#1a56db','#d97706','#db2777','#0891b2'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['Aprobado (0)','Buró Crédito (6)','En seguimiento (8)','Declina oferta (1)'], datasets:[{ data:dimexStatusData, backgroundColor:['#059669','#7c3aed','#1a56db','#d97706','#db2777','#0891b2'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/dimexStatusTotal)*100).toFixed(1)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
   // Estatus CSB
-  const csbStatusData = [3,2,8];
+  const csbStatusData = [0,8,5,1];
   const csbStatusTotal = csbStatusData.reduce((a,b)=>a+b,0);
   document.getElementById('csbStatusTotalBadge').innerText = `Total: ${csbStatusTotal}`;
   new Chart(document.getElementById('csbStatusChart'), {
-    type:'doughnut', data:{ labels:['Aprobado (3)','Buró Crédito (2)','En seguimiento (8)'], datasets:[{ data:csbStatusData, backgroundColor:['#059669','#7c3aed','#1a56db'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['Aprobado (0)','Sin capacidad (8)','En seguimiento (5)', 'Ilocalizable(1)'], datasets:[{ data:csbStatusData, backgroundColor:['#059669','#7c3aed','#1a56db'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/csbStatusTotal)*100).toFixed(1)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
   // Estatus Multiva
-  const pipeData = [2,5,4,2,1,1];
+  const pipeData = [0,4,5,1];
   const pipeTotal = pipeData.reduce((a,b)=>a+b,0);
   document.getElementById('multivaPipeTotalBadge').innerText = `Total: ${pipeTotal}`;
   new Chart(document.getElementById('multivaEstatusPipelineChart'), {
-    type:'doughnut', data:{ labels:['Comprado (2)','En proceso (5)','Sin capacidad (4)','En recuperación (2)', 'Politicas (1)','Canceladas (1)'], datasets:[{ data:pipeData, backgroundColor:['#059669','#7c3aed','#1a56db','#d97706','#db2777','#0891b2'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['Comprado (0)','En proceso (4)','Sin capacidad (5)', 'Ilocalizable (1)'], datasets:[{ data:pipeData, backgroundColor:['#059669','#7c3aed','#1a56db','#d97706','#db2777','#0891b2'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/pipeTotal)*100).toFixed(1)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
