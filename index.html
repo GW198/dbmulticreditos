@@ -760,11 +760,11 @@
   });
   
   // Gestión
-  const gestionData = [2,4,25,7];
+  const gestionData = [2,18,8,2,6];
   const gestionTotal = gestionData.reduce((a,b)=>a+b,0);
   document.getElementById('gestionTotalBadge').innerText = `Total: ${gestionTotal}`;
   new Chart(document.getElementById('gestionChart'), {
-    type:'doughnut', data:{ labels:['Ventas (2)','Buro de Crédito (4)', 'Espera de respuesta (25)', 'Sin convenio (7)'], datasets:[{ data:gestionData, backgroundColor:['#059669','#7c3aed','#1a56db','#d97706','#db2777','#0891b2'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['Seguimientos (2)','No contesta (18)', 'No cumple politicas (8)', 'Sin capacidad (2)', 'No le interesa (6)'], datasets:[{ data:gestionData, backgroundColor:['#059669','#7c3aed','#1a56db','#d97706','#db2777','#0891b2'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/gestionTotal)*100).toFixed(1)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
 
@@ -812,7 +812,7 @@
   });
   
   new Chart(document.getElementById('ventasProductoChart'), {
-    type:'doughnut', data:{ labels:['DIMEX Vendido','Multiva Vendido', 'CSB Vendido'], datasets:[{ data:[226302.81, 530000,40000], backgroundColor:['#1a56db','#7c3aed','#059669'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['DIMEX Vendido','Multiva Vendido', 'CSB Vendido'], datasets:[{ data:[0, 0, 0], backgroundColor:['#1a56db','#7c3aed','#059669'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:10 } } }, datalabels:{ formatter:(v,ctx)=> v>0 ? `${((v/ventasTotales)*100).toFixed(0)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
