@@ -322,10 +322,10 @@
         <div class="topbar-left"><div class="topbar-eyebrow">Reporte mensual</div><div class="topbar-title">Junio 2026</div></div>
       </div>
       <div class="kpi-grid">
-        <div class="kpi-card" data-color="blue"><div class="kpi-top"><div class="kpi-icon blue"><i class="fas fa-phone-volume"></i></div><div class="kpi-label-top">Llamadas realizadas</div></div><div class="kpi-value">33,796</div><div class="kpi-meta"></div></div>
+        <div class="kpi-card" data-color="blue"><div class="kpi-top"><div class="kpi-icon blue"><i class="fas fa-phone-volume"></i></div><div class="kpi-label-top">Llamadas realizadas</div></div><div class="kpi-value">41,327</div><div class="kpi-meta"></div></div>
         <div class="kpi-card" data-color="purple"><div class="kpi-top"><div class="kpi-icon purple"><i class="fas fa-chart-simple"></i></div><div class="kpi-label-top">Vendido DIMEX ✅</div></div><div class="kpi-value">$</div><div class="kpi-meta"></div></div>
         <div class="kpi-card" data-color="orange"><div class="kpi-top"><div class="kpi-icon orange"><i class="fas fa-chart-line"></i></div><div class="kpi-label-top">Vendido MULTIVA 💰</div></div><div class="kpi-value">$</div><div class="kpi-meta"></div></div>
-        <div class="kpi-card" data-color="green"><div class="kpi-top"><div class="kpi-icon green"><i class="fas fa-percent"></i></div><div class="kpi-label-top">Contactabilidad</div></div><div class="kpi-value">30.1%</div><div class="kpi-meta"></div></div>
+        <div class="kpi-card" data-color="green"><div class="kpi-top"><div class="kpi-icon green"><i class="fas fa-percent"></i></div><div class="kpi-label-top">Contactabilidad</div></div><div class="kpi-value">27.80%</div><div class="kpi-meta"></div></div>
       </div>
     </div>
 
@@ -505,7 +505,7 @@
   
   // ========== DATOS DE SEMANA PASADA (DATOS ORIGINALES) ==========
   const AGENTES_PREVIOUS = [
-    { nombre: "Paula", llamadas: 1933, contactos: 1568, vendido: 0, transferido:0 },
+    { nombre: "Paula", llamadas: 2282, contactos: 405, vendido: 0, transferido:0 },
     { nombre: "Vanesa", llamadas: 1910, contactos: 1661, vendido: 0, transferido: 0 },
     { nombre: "Betzabeth", llamadas: 1410, contactos: 1137, vendido: 0, transferido: 0 },
     { nombre: "Deysi", llamadas: 1326, contactos: 1164, vendido: 0, transferido: 0 },
@@ -515,12 +515,12 @@
 
   // ========== DATOS DE SEMANA ACTUAL ==========
   const AGENTES_CURRENT = [
-      { nombre: "Paula", llamadas: 1933, contactos: 1568, vendido: 0, transferido:315075 },
-    { nombre: "Vanesa", llamadas: 1910, contactos: 1661, vendido: 0, transferido: 0 },
-    { nombre: "Betzabeth", llamadas: 1410, contactos: 1137, vendido: 0, transferido: 46500 },
-    { nombre: "Deysi", llamadas: 1326, contactos: 1164, vendido: 0, transferido: 20000 },
-    { nombre: "Greisi", llamadas: 1775, contactos: 1475, vendido: 0, transferido: 115000 },
-    { nombre: "Lorenys", llamadas: 2290, contactos: 1916, vendido: 0, transferido: 55000 }
+      { nombre: "Paula", llamadas: 2282, contactos: 1990, vendido: 0, transferido: 360075.96 },
+    { nombre: "Vanesa", llamadas: 2338, contactos: 2263, vendido: 0, transferido: 0 },
+    { nombre: "Betzabeth", llamadas: 1595, contactos: 1321, vendido: 0, transferido: 756500 },
+    { nombre: "Deysi", llamadas: 1326, contactos: 1312, vendido: 0, transferido: 20000 },
+    { nombre: "Greisi", llamadas: 2057, contactos: 1998, vendido: 0, transferido: 115000 },
+    { nombre: "Lorenys", llamadas: 2654, contactos: 2596, vendido: 0, transferido: 55000 }
 
   ];
 
@@ -723,9 +723,9 @@
   
   // Funnel
   const funnelData = [
-    { name:"📞 Llamadas Totales", value:33796, color:"#1a56db" },
-    { name:"✅ Contactables", value:10178, color:"#7c3aed" },
-    { name:"🔄 Transferidas", value:42, color:"#059669" },
+    { name:"📞 Llamadas Totales", value:41326, color:"#1a56db" },
+    { name:"✅ Contactables", value:11490, color:"#7c3aed" },
+    { name:"🔄 Transferidas", value:54, color:"#059669" },
     { name:"💰 Ventas Cerradas", value:0, color:"#d97706" }
   ];
   const maxFunnel = funnelData[0].value;
@@ -769,20 +769,20 @@
   });
 
   // Estatus DIMEX
-  const dimexStatusData = [0,6,8,1];
+  const dimexStatusData = [0,7,16,1];
   const dimexStatusTotal = dimexStatusData.reduce((a,b)=>a+b,0);
   document.getElementById('dimexStatusTotalBadge').innerText = `Total: ${dimexStatusTotal}`;
   new Chart(document.getElementById('dimexStatusChart'), {
-    type:'doughnut', data:{ labels:['Aprobado (0)','Buró Crédito (6)','En seguimiento (8)','Declina oferta (1)'], datasets:[{ data:dimexStatusData, backgroundColor:['#059669','#7c3aed','#1a56db','#d97706','#db2777','#0891b2'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['Aprobado (0)','Buró Crédito (7)','En seguimiento (16)','Declina oferta (1)'], datasets:[{ data:dimexStatusData, backgroundColor:['#059669','#7c3aed','#1a56db','#d97706','#db2777','#0891b2'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/dimexStatusTotal)*100).toFixed(1)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
   // Estatus CSB
-  const csbStatusData = [0,8,5,1];
+  const csbStatusData = [0,9,9,1];
   const csbStatusTotal = csbStatusData.reduce((a,b)=>a+b,0);
   document.getElementById('csbStatusTotalBadge').innerText = `Total: ${csbStatusTotal}`;
   new Chart(document.getElementById('csbStatusChart'), {
-    type:'doughnut', data:{ labels:['Aprobado (0)','Sin capacidad (8)','En seguimiento (5)', 'Ilocalizable(1)'], datasets:[{ data:csbStatusData, backgroundColor:['#059669','#7c3aed','#1a56db'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['Aprobado (0)','Sin capacidad (9)','En seguimiento (9)', 'Ilocalizable(1)'], datasets:[{ data:csbStatusData, backgroundColor:['#059669','#7c3aed','#1a56db'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/csbStatusTotal)*100).toFixed(1)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
