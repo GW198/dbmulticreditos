@@ -725,8 +725,8 @@
   const funnelData = [
     { name:"📞 Llamadas Totales", value:41326, color:"#1a56db" },
     { name:"✅ Contactables", value:11490, color:"#7c3aed" },
-    { name:"🔄 Transferidas", value:54, color:"#059669" },
-    { name:"💰 Ventas Cerradas", value:0, color:"#d97706" }
+    { name:"🔄 Transferidas", value:59, color:"#059669" },
+    { name:"💰 Ventas Cerradas", value:4, color:"#d97706" }
   ];
   const maxFunnel = funnelData[0].value;
   const funnelRoot = document.getElementById('funnelRoot');
@@ -826,12 +826,12 @@
       pct.innerText = `${percent.toFixed(1)}%`;
     }
   };
-  updateProgress('dimexCompradoFill','dimexCompradoPercent',0,900000);
-  updateProgress('dimexTransferFill','dimexTransferPercent',385075.96,1500000);
+  updateProgress('dimexCompradoFill','dimexCompradoPercent',69404,900000);
+  updateProgress('dimexTransferFill','dimexTransferPercent',564479.96,1500000);
   updateProgress('multivaCompradoFill','multivaCompradoPercent',0,900000);
   updateProgress('multivaTransferFill','multivaTransferPercent',111500,1500000);
-  updateProgress('csbCompradoFill','csbCompradoPercent',0,300000);
-  updateProgress('csbTransferFill','csbTransferPercent',125000,600000);
+  updateProgress('csbCompradoFill','csbCompradoPercent',11463.93,300000);
+  updateProgress('csbTransferFill','csbTransferPercent',921863.93,600000);
   
   // Tabla agentes
   const tbody = document.getElementById('tablaAgentesBody');
