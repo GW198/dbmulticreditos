@@ -420,7 +420,7 @@
       <div class="progress-row">
         <div class="progress-card"><div class="progress-card-title"><i class="fas fa-chart-simple"></i> DIMEX · Meta Compra / Transferido</div>
           <div class="bar-row"><div class="bar-meta"><span>✅ Comprado: <strong>$69,404</strong></span><span>Meta: $900,000</span></div><div class="bar-track"><div class="bar-fill blue" id="dimexCompradoFill" style="width:0%"></div></div><div class="bar-pct" id="dimexCompradoPercent">0%</div></div>
-          <div class="bar-row"><div class="bar-meta"><span>🔄 Transferido: <strong>$385,075.96</strong></span><span>Meta: $1,500,000</span></div><div class="bar-track"><div class="bar-fill purple" id="dimexTransferFill" style="width:0%"></div></div><div class="bar-pct" id="dimexTransferPercent">0%</div></div>
+          <div class="bar-row"><div class="bar-meta"><span>🔄 Transferido: <strong>$564,479.96</strong></span><span>Meta: $1,500,000</span></div><div class="bar-track"><div class="bar-fill purple" id="dimexTransferFill" style="width:0%"></div></div><div class="bar-pct" id="dimexTransferPercent">0%</div></div>
         </div>
         <div  class="progress-card"><div class="progress-card-title"><i class="fas fa-chart-simple"></i> CSB · Meta Compra / Transferido</div>
           <div class="bar-row"><div class="bar-meta"><span>✅ Comprado: <strong>$11,463.93</strong></span><span>Meta: $300,000</span></div><div class="bar-track"><div class="bar-fill blue" id="csbCompradoFill" style="width:0%"></div></div><div class="bar-pct" id="csbCompradoPercent">0%</div></div>
@@ -515,7 +515,7 @@
 
   // ========== DATOS DE SEMANA ACTUAL ==========
   const AGENTES_CURRENT = [
-      { nombre: "Paula", llamadas: 2282, contactos: 1990, vendido: 0, transferido: 360075.96 },
+      { nombre: "Paula", llamadas: 2282, contactos: 1990, vendido: 80867.93, transferido: 360075.96 },
     { nombre: "Vanesa", llamadas: 2338, contactos: 2263, vendido: 0, transferido: 0 },
     { nombre: "Betzabeth", llamadas: 1595, contactos: 1321, vendido: 0, transferido: 756500 },
     { nombre: "Deysi", llamadas: 1326, contactos: 1312, vendido: 0, transferido: 20000 },
@@ -812,7 +812,7 @@
   });
   
   new Chart(document.getElementById('ventasProductoChart'), {
-    type:'doughnut', data:{ labels:['DIMEX Vendido','Multiva Vendido', 'CSB Vendido'], datasets:[{ data:[0, 0, 0], backgroundColor:['#1a56db','#7c3aed','#059669'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['DIMEX Vendido','Multiva Vendido', 'CSB Vendido'], datasets:[{ data:[69404.00, 0, 11463.93], backgroundColor:['#1a56db','#7c3aed','#059669'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:10 } } }, datalabels:{ formatter:(v,ctx)=> v>0 ? `${((v/ventasTotales)*100).toFixed(0)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
