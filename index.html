@@ -714,7 +714,7 @@
   const totalContactos = AGENTES.reduce((s,a)=>s+a.contactos,0);
   const ratioGlobal = totalLlamadas>0 ? ((totalContactos/totalLlamadas)*100).toFixed(1) : 0;
   const totalTransferido = AGENTES.reduce((s,a)=>s+a.transferido,0);
-  const ventasTotales = 0;
+  const ventasTotales = 80867.93;
   
   document.getElementById('ratioMediaEquipo').innerText = `${ratioGlobal}%`;
   document.getElementById('llamadasTotalBadge').innerHTML = `Total: ${totalLlamadas.toLocaleString()}`;
